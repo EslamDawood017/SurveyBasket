@@ -1,0 +1,42 @@
+# Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.cache
+*.swp
+
+# Ignore build outputs
+bin/
+obj/
+out/
+*.log
+*.tlog
+
+# Ignore packages and dependencies
+packages/
+node_modules/
+wwwroot/lib/
+
+# Ignore configuration and environment files
+appsettings.json
+appsettings.*.json
+secrets.json
+.env
+*.config
+
+# Ignore user-specific files
+*.dbmdl
+*.bak
+*.mdf
+*.ldf
+
+# Ignore temporary files
+*.tmp
+*.cache
+*.lock
+*.pid
+*.seed
+
+# Ignore IIS and
