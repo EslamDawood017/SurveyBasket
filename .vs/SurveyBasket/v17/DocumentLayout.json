@@ -5,22 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\services\\pollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\pollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\interfaces\\ipollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\interfaces\\ipollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\models\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\models\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,47 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Poll.cs",
-              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Models\\Poll.cs",
-              "RelativeDocumentMoniker": "SurveyBasket.Api\\Models\\Poll.cs",
-              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Models\\Poll.cs",
-              "RelativeToolTip": "SurveyBasket.Api\\Models\\Poll.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T18:50:58.261Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PollService.cs",
-              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Services\\PollService.cs",
-              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\PollService.cs",
-              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Services\\PollService.cs",
-              "RelativeToolTip": "SurveyBasket.Api\\Services\\PollService.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAwwDQAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T18:40:49.007Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IPollService.cs",
-              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Interfaces\\IPollService.cs",
-              "RelativeDocumentMoniker": "SurveyBasket.Api\\Interfaces\\IPollService.cs",
-              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Interfaces\\IPollService.cs",
-              "RelativeToolTip": "SurveyBasket.Api\\Interfaces\\IPollService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T18:40:32.567Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -79,22 +24,9 @@
               "RelativeDocumentMoniker": "SurveyBasket.Api\\Controllers\\PollsController.cs",
               "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs",
               "RelativeToolTip": "SurveyBasket.Api\\Controllers\\PollsController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAACAAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAAEgAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T12:05:31.878Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Program.cs",
-              "RelativeDocumentMoniker": "SurveyBasket.Api\\Program.cs",
-              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Program.cs",
-              "RelativeToolTip": "SurveyBasket.Api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-17T18:53:54.136Z",
+              "WhenOpened": "2025-03-22T20:23:21.468Z",
               "EditorCaption": ""
             }
           ]
