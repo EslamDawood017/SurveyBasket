@@ -1,6 +1,5 @@
 ﻿using Mapster;
-using SurveyBasket.Api.Contract.Response;
-
+using SurveyBasket.Api.Contract.Poll;
 
 namespace SurveyBasket.Api.Mapping;
 

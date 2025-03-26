@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SurveyBasket.Api.Data;
+using SurveyBasket.Api.Interfaces;
+using SurveyBasket.Api.Services;
 
 namespace SurveyBasket.Api
 {
@@ -9,11 +11,17 @@ namespace SurveyBasket.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+         
             var ConnectionString = builder.Configuration.GetConnectionString("DefualtConnection");
+           
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(ConnectionString));
 
             builder.Services.AddDependancies();
-            builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(ConnectionString));
+            
+
+           
+            
            
             var app = builder.Build();
 
@@ -27,7 +35,6 @@ namespace SurveyBasket.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

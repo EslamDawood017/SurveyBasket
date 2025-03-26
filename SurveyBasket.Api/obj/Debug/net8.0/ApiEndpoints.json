@@ -93,5 +93,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "Auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequist",
+        "Type": "SurveyBasket.Api.Contract.Auth.LoginRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

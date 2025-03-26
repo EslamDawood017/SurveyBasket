@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\authentications\\jwtprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\authentications\\jwtprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|c:\\users\\dawoo\\onedrive\\desktop\\new project\\surveybasket\\surveybasket.api\\dependancyinjections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3E2540B-75CF-45EF-853C-149B4B9805BE}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\dependancyinjections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PollsController.cs",
               "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs",
               "RelativeDocumentMoniker": "SurveyBasket.Api\\Controllers\\PollsController.cs",
-              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs*",
-              "RelativeToolTip": "SurveyBasket.Api\\Controllers\\PollsController.cs*",
-              "ViewState": "AgIAADEAAAAAAAAAAAAAAEgAAABGAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABkAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T20:23:21.468Z",
+              "WhenOpened": "2025-03-26T14:07:43.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Services\\AuthService.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Services\\AuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAABpAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T14:03:51.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DependancyInjections.cs",
+              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\DependancyInjections.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\DependancyInjections.cs",
+              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\DependancyInjections.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\DependancyInjections.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwDUAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T13:26:16.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "JwtProvider.cs",
+              "DocumentMoniker": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Authentications\\JwtProvider.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Authentications\\JwtProvider.cs",
+              "ToolTip": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\Authentications\\JwtProvider.cs*",
+              "RelativeToolTip": "SurveyBasket.Api\\Authentications\\JwtProvider.cs*",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCEAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T13:23:37.798Z",
               "EditorCaption": ""
             }
           ]

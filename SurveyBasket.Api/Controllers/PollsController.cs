@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SurveyBasket.Api.Contract.Poll;
 using SurveyBasket.Api.Contract.Requist;
-using SurveyBasket.Api.Contract.Response;
 using SurveyBasket.Api.Interfaces;
 
 
@@ -22,6 +23,7 @@ public class PollsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAll( CancellationToken cancellationToken)
     {
         var Polls = await _pollService.GetAllAsync(cancellationToken);

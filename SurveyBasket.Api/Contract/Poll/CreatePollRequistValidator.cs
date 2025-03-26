@@ -1,22 +1,22 @@
 ﻿using FluentValidation;
 using SurveyBasket.Api.Contract.Requist;
 
-namespace SurveyBasket.Api.Contract.Validations;
+namespace SurveyBasket.Api.Contract.Poll;
 
-public class CreatePollRequistValidator : AbstractValidator<CreatePollRequist>
+public class LoginRequistValidator : AbstractValidator<CreatePollRequist>
 {
-    public CreatePollRequistValidator()
+    public LoginRequistValidator()
     {
         RuleFor(x => x.Title)
             .NotEmpty()
             .WithMessage("title is reuired")
-            .Length(3,100);
+            .Length(3, 100);
 
         RuleFor(x => x.Summary)
             .NotEmpty()
             .Length(3, 1000);
 
-        RuleFor(x=> x.StartsAt)
+        RuleFor(x => x.StartsAt)
             .NotEmpty()
             .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today));
 
