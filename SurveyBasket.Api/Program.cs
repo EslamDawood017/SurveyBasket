@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Api.Services;
@@ -18,10 +19,8 @@ namespace SurveyBasket.Api
                 options.UseSqlServer(ConnectionString));
 
             builder.Services.AddDependancies();
-            
 
-           
-            
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
            
             var app = builder.Build();
 

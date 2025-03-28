@@ -24,6 +24,7 @@ public static class DependancyInjections
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         
+        
 
         services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDbContext>()

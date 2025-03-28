@@ -109,5 +109,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "Refresh",
+    "RelativePath": "Auth/Refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Requist",
+        "Type": "SurveyBasket.Api.Contract.Auth.RefreshTokenRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "RevokeResfreshToken",
+    "RelativePath": "Auth/revoke-refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Requist",
+        "Type": "SurveyBasket.Api.Contract.Auth.RefreshTokenRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
