@@ -13,7 +13,7 @@ public class AuthService(UserManager<ApplicationUser> userManager , IJwtProvider
     private readonly int _refreshTokenExpireDays = 14;
     public async Task<AuthResponse?> GetTokenAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        ApplicationUser user = await _userManager.FindByEmailAsync(email);
 
         if (user == null)
             return null;

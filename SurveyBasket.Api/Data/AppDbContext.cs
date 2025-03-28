@@ -3,20 +3,47 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SurveyBasket.Api.Data.EntitiesConfig;
 using System.Reflection;
+using System.Security.Claims;
 
 
 namespace SurveyBasket.Api.Data;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole , int>
 {
+    private readonly IHttpContextAccessor httpContextAccessor;
+
     public DbSet<Poll> Polls { get; set; }
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options , IHttpContextAccessor httpContextAccessor) : base(options)
     {
-       
+        this.httpContextAccessor = httpContextAccessor;
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
         base.OnModelCreating(modelBuilder);
+    }
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+       //var CurrentUserID = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        //int.TryParse(CurrentUserID, out var NewUserID);
+
+        var entries = ChangeTracker.Entries<AuditableEntity>();
+
+        foreach (var entry in entries)
+        {
+            if(entry.State == EntityState.Added)
+            {
+                entry.Property(x => x.CreatedById).CurrentValue = 1; //NewUserID;
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                entry.Property(x => x.UpdatedById).CurrentValue = 1; //NewUserID;
+
+                entry.Property(x => x.UpdatedOn).CurrentValue = DateTime.UtcNow; 
+            }
+
+        }
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

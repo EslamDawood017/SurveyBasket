@@ -12,7 +12,7 @@ using SurveyBasket.Api.Interfaces;
 
 namespace SurveyBasket.Api.Controllers;
 [Route("api/[controller]")]
-[ApiController]
+
 public class PollsController : ControllerBase
 {
     private IPollService _pollService;

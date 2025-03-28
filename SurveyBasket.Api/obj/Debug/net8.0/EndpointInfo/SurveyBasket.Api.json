@@ -260,9 +260,6 @@
             "type": "string",
             "nullable": true
           },
-          "isPublished": {
-            "type": "boolean"
-          },
           "startsAt": {
             "type": "string",
             "format": "date"
