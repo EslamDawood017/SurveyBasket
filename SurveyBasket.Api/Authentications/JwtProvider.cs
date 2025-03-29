@@ -13,14 +13,15 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 
     public (string Token, int ExpiredIn) GenerateToken(ApplicationUser user)
     {
-        
-        Claim[] claims =  [
-            new (JwtRegisteredClaimNames.Sub ,user.Id.ToString() ), 
-            new (JwtRegisteredClaimNames.Email ,user.Email! ), 
-            new (JwtRegisteredClaimNames.GivenName ,user.FirstName ), 
-            new (JwtRegisteredClaimNames.FamilyName ,user.LastName), 
-            new (JwtRegisteredClaimNames.Jti ,Guid.NewGuid().ToString() ),
-            ];
+
+        Claim[] claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+            new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key!));
     
@@ -59,7 +60,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 
             return jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
         }
-        catch 
+        catch
         {
             return null;
         }

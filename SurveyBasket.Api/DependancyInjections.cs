@@ -11,20 +11,31 @@ using SurveyBasket.Api.Services;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace SurveyBasket.Api;
 
 public static class DependancyInjections
 {
-    public static IServiceCollection AddDependancies(this IServiceCollection services)
+   
+
+    public static IServiceCollection AddDependancies(this IServiceCollection services , IConfiguration configuration)
     {
         services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        
-        
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
+        });
 
         services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDbContext>()
@@ -34,6 +45,9 @@ public static class DependancyInjections
         services.AddScoped<IAuthService, AuthService>();
         services.AddSingleton<IJwtProvider , JwtProvider>();
 
+        var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
+
+        Console.WriteLine($"Key: {jwtOptions.Key} => Issuer : {jwtOptions.Issuer} => aduiense {jwtOptions.Audience}");
         services.AddAuthentication(option =>
         {
             option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,9 +62,9 @@ public static class DependancyInjections
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("UbRHQ0TEUHszoa9BQ3EeDUCFW0DMPAhM")),
-                ValidIssuer = "SurveyBasketApp" ,
-                ValidAudience = "SurveyBasketApp Users"
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions!.Key)),
+                ValidIssuer = jwtOptions?.Issuer ,
+                ValidAudience = jwtOptions?.Audience ,
             };
         });
         //Adding Mapster 

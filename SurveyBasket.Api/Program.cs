@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Interfaces;
@@ -18,10 +19,36 @@ namespace SurveyBasket.Api
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(ConnectionString));
 
-            builder.Services.AddDependancies();
+            builder.Services.AddDependancies(builder.Configuration);
 
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
-           
+
+            // Configure Swagger to use JWT Bearer Token
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+
+                // Enable JWT in Swagger UI
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Enter 'Bearer {your token here}'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            new List<string>()
+        }
+    });
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,10 +56,15 @@ namespace SurveyBasket.Api
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
             }
+
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowAll");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

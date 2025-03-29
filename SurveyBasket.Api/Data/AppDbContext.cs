@@ -24,9 +24,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
     }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-       //var CurrentUserID = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
-        //int.TryParse(CurrentUserID, out var NewUserID);
+        var CurrentUserID = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        int.TryParse(CurrentUserID, out var NewUserID);
 
         var entries = ChangeTracker.Entries<AuditableEntity>();
 
@@ -34,11 +34,11 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
         {
             if(entry.State == EntityState.Added)
             {
-                entry.Property(x => x.CreatedById).CurrentValue = 1; //NewUserID;
+                entry.Property(x => x.CreatedById).CurrentValue = NewUserID;
             }
             else if (entry.State == EntityState.Modified)
             {
-                entry.Property(x => x.UpdatedById).CurrentValue = 1; //NewUserID;
+                entry.Property(x => x.UpdatedById).CurrentValue = NewUserID;
 
                 entry.Property(x => x.UpdatedOn).CurrentValue = DateTime.UtcNow; 
             }

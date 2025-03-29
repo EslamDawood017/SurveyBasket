@@ -53,7 +53,7 @@ public class AuthService(UserManager<ApplicationUser> userManager , IJwtProvider
 
         var user = await _userManager.FindByIdAsync(userId);
 
-        if (user is null) 
+        if (user is null)
             return null;
 
         var userRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken && x.IsActive);

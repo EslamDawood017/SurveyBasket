@@ -12,6 +12,7 @@ using SurveyBasket.Api.Interfaces;
 
 namespace SurveyBasket.Api.Controllers;
 [Route("api/[controller]")]
+[Authorize]
 
 public class PollsController : ControllerBase
 {
@@ -23,7 +24,6 @@ public class PollsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetAll( CancellationToken cancellationToken)
     {
         var Polls = await _pollService.GetAllAsync(cancellationToken);
@@ -46,7 +46,7 @@ public class PollsController : ControllerBase
 
         var NewPoll = await _pollService.AddAsync(requist.Adapt<Poll>() , cancellationToken);
 
-        return CreatedAtAction(nameof(Get), new { id = NewPoll.Id }, NewPoll);
+        return CreatedAtAction(nameof(Get), new { id = NewPoll.Id }, NewPoll.Adapt<PollResponse>());
     }
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CreatePollRequist poll , CancellationToken cancellationToken )

@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "SurveyBasket.Api",
-    "version": "1.0"
+    "title": "Your API",
+    "version": "v1"
   },
   "paths": {
     "/Auth/Login": {
@@ -299,6 +299,18 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter 'Bearer {your token here}'",
+        "scheme": "Bearer"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
