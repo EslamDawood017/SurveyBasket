@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Contract.Auth;
 using SurveyBasket.Api.Interfaces;
@@ -26,30 +28,26 @@ public class AuthController(
     {
         var authResult = await _authService.GetTokenAsync(loginRequist.email, loginRequist.password, cancellationToken);
 
-        if (authResult == null)
-            return BadRequest("Invalid UserName or Password");
-
-        return Ok(authResult);
+        if (authResult!.IsFailure)
+            return Problem(
+                statusCode: StatusCodes.Status400BadRequest,
+               
+                title: "Bad Request" );
+        return Ok(authResult.Value);
     }
     [HttpPost("Refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenRequist Requist, CancellationToken cancellationToken)
     {
-        var authResult = await _authService.GetRefreshTokenAsync(Requist.token, Requist.refreshToken, cancellationToken);
+        var result = await _authService.GetRefreshTokenAsync(Requist.token, Requist.refreshToken, cancellationToken);
 
-        if (authResult == null)
-            return BadRequest("Invalid token");
-
-        return Ok(authResult);
+        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);   
     }
     [HttpPost("revoke-refresh-token")]
     public async Task<IActionResult> RevokeResfreshToken(RefreshTokenRequist Requist, CancellationToken cancellationToken)
     {
-        var isRevoked = await _authService.RevokeRefreshTokenAsync(Requist.token, Requist.refreshToken, cancellationToken);
+        var result = await _authService.RevokeRefreshTokenAsync(Requist.token, Requist.refreshToken, cancellationToken);
 
-        if (!isRevoked)
-            return BadRequest("Operation failed");
+        return result.IsSuccess ? Ok() : Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);
 
-        return Ok();
     }
-
 }

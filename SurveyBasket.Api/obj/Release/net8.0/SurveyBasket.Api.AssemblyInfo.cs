@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("18a67841-8c1e-4b22-b6dc-fa9ae69f2077")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SurveyBasket.Api")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fba4d15e21486702d7a4757ab2c8d9a7b7571085")]
 [assembly: System.Reflection.AssemblyProductAttribute("SurveyBasket.Api")]

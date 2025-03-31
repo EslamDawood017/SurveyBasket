@@ -12,6 +12,7 @@ using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
+using SurveyBasket.Api.Errors;
 
 namespace SurveyBasket.Api;
 
@@ -44,6 +45,9 @@ public static class DependancyInjections
         services.AddScoped<IPollService, PollService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddSingleton<IJwtProvider , JwtProvider>();
+
+        //services.AddExceptionHandler<GlobalExceptionHandler>();
+        //services.AddProblemDetails();
 
         var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
 

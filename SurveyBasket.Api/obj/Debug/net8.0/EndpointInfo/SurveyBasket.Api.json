@@ -117,17 +117,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             }
           }
@@ -180,17 +180,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePollRequist"
+                "$ref": "#/components/schemas/PollRequist"
               }
             }
           }
@@ -249,7 +249,21 @@
   },
   "components": {
     "schemas": {
-      "CreatePollRequist": {
+      "LoginRequist": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PollRequist": {
         "type": "object",
         "properties": {
           "title": {
@@ -267,20 +281,6 @@
           "endsAt": {
             "type": "string",
             "format": "date"
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginRequist": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

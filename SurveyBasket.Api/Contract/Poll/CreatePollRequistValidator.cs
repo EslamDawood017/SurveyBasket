@@ -3,7 +3,7 @@ using SurveyBasket.Api.Contract.Requist;
 
 namespace SurveyBasket.Api.Contract.Poll;
 
-public class LoginRequistValidator : AbstractValidator<CreatePollRequist>
+public class LoginRequistValidator : AbstractValidator<PollRequist>
 {
     public LoginRequistValidator()
     {

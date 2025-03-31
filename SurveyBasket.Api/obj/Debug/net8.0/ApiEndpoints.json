@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "requist",
-        "Type": "SurveyBasket.Api.Contract.Requist.CreatePollRequist",
+        "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
         "IsRequired": true
       }
     ],
@@ -55,8 +55,8 @@
         "IsRequired": true
       },
       {
-        "Name": "poll",
-        "Type": "SurveyBasket.Api.Contract.Requist.CreatePollRequist",
+        "Name": "requist",
+        "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
         "IsRequired": true
       }
     ],

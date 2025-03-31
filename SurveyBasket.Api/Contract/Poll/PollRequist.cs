@@ -1,6 +1,7 @@
 ﻿namespace SurveyBasket.Api.Contract.Requist;
 
-public record CreatePollRequist(string Title,
+public record PollRequist(
+    string Title,
     string Summary,
     DateOnly StartsAt,
     DateOnly EndsAt

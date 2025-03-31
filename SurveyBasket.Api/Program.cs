@@ -65,9 +65,12 @@ namespace SurveyBasket.Api
             app.UseCors("AllowAll");
 
             app.UseAuthentication();
-            app.UseAuthorization();
 
+            app.UseAuthorization();
+           
             app.MapControllers();
+
+            //app.UseExceptionHandler();
 
             app.Run();
         }
