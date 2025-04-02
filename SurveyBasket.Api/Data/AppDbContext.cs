@@ -13,12 +13,25 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
     private readonly IHttpContextAccessor httpContextAccessor;
 
     public DbSet<Poll> Polls { get; set; }
+    public DbSet<Answer> Answers { get; set; }
+    public DbSet<Question> Questions { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options , IHttpContextAccessor httpContextAccessor) : base(options)
     {
         this.httpContextAccessor = httpContextAccessor;
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        var CascadeFKs = modelBuilder.Model
+            .GetEntityTypes()
+            .SelectMany(t => t.GetForeignKeys())
+            .Where( fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
+
+        foreach(var fk in CascadeFKs)
+        {
+            fk.DeleteBehavior = DeleteBehavior.Restrict;
+        }    
+
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
         base.OnModelCreating(modelBuilder);
     }
