@@ -15,6 +15,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
     public DbSet<Poll> Polls { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Question> Questions { get; set; }
+    public DbSet<Vote> Votes { get; set; }
+    public DbSet<VoteAnswer> VoteAnswers { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options , IHttpContextAccessor httpContextAccessor) : base(options)
     {
         this.httpContextAccessor = httpContextAccessor;

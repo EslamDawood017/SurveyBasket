@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj": {}
+    "C:\\Users\\dawoo\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj": {
+    "C:\\Users\\dawoo\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
+        "projectUniqueName": "C:\\Users\\dawoo\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
         "projectName": "SurveyBasket.Api",
-        "projectPath": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
+        "projectPath": "C:\\Users\\dawoo\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
         "packagesPath": "C:\\Users\\dawoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dawoo\\OneDrive\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\obj\\",
+        "outputPath": "C:\\Users\\dawoo\\Desktop\\New Project\\SurveyBasket\\SurveyBasket.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[11.11.0, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
+            },
             "Mapster": {
               "target": "Package",
               "version": "[7.4.0, )"
@@ -87,6 +91,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "SharpGrip.FluentValidation.AutoValidation.Mvc": {
               "target": "Package",

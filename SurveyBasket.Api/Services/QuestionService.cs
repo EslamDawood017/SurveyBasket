@@ -3,18 +3,21 @@ using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Contract.Answer;
 using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Data;
+using SurveyBasket.Api.Entities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace SurveyBasket.Api.Services;
 
-public class QuestionService(AppDbContext context) : IQuestionService
+public class QuestionService(AppDbContext context , IDistributedCashService distributedCashService) : IQuestionService
 {
     private readonly AppDbContext _context = context;
-
+    private readonly IDistributedCashService _distributedCashService = distributedCashService;
+    private const string _cashPrefix = "availableQuestion";
     public async Task<Result<QuestionResponse>> AddAsync(int PollId, QuestionRequist requist, CancellationToken cancellationToken)
     {
         var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId , cancellationToken);
@@ -31,14 +34,11 @@ public class QuestionService(AppDbContext context) : IQuestionService
 
         question.PollId = PollId;
 
-        foreach(var answer in requist.Answers)
-        {
-            question.Answers.Add(
-                new Answer { Content = answer }); 
-        }
 
         await _context.Questions.AddAsync(question, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _distributedCashService.RemoveAsunc($"{_cashPrefix}-{PollId}");
 
         return Result.Success(question.Adapt<QuestionResponse>());  
     }
@@ -85,7 +85,65 @@ public class QuestionService(AppDbContext context) : IQuestionService
         return Result.Success(Question.Adapt<QuestionResponse>());
        
     }
+    public async Task<Result<ICollection<QuestionResponse>>> GetAvailableAsync(int PollId, int UserId, CancellationToken cancellationToken)
+    {
+        var hasVoted = await _context.Votes.AnyAsync(v => v.PollId == PollId && v.ApplicationUserId == UserId , cancellationToken);
 
+        if (hasVoted)
+            return Result.Failure<ICollection<QuestionResponse>>(VoteError.DuplicatedVote);
+
+        var isPollExist = await _context.Polls.AnyAsync( p => p.Id == PollId && p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow));
+      
+        if (!isPollExist)
+            return Result.Failure<ICollection<QuestionResponse>>(PollError.PollNotFound);
+
+        var cashKey = $"{_cashPrefix}-{PollId}";
+
+        var cashQuestions = await _distributedCashService.GetAsunc<ICollection<QuestionResponse>>(cashKey, cancellationToken);
+
+        ICollection<QuestionResponse> questions = [];
+
+        if(cashQuestions is null)
+        {
+            Console.WriteLine("Result From DataBase");
+            questions = await _context.Questions
+                .Where(x => x.PollId == PollId && x.IsActive)
+                .Include(x => x.Answers)
+                .Select(q => new QuestionResponse(
+                    q.Id,
+                    q.Content,
+                    q.Answers.Select(a => new AnswerResponse(
+                        a.Id,
+                        a.Content))
+                    ))
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            await _distributedCashService.SetAsunc(cashKey, questions, cancellationToken);
+        }
+        else
+        {
+            Console.WriteLine("Result From Cash");
+            questions = cashQuestions;
+        }
+
+
+        //var question = await _context.Questions
+        //    .Where(x => x.PollId == PollId && x.IsActive)
+        //    .Include(x => x.Answers)
+        //    .Select(q => new QuestionResponse (
+        //        q.Id ,
+        //        q.Content ,
+        //        q.Answers.Select(a => new AnswerResponse(
+        //            a.Id ,
+        //            a.Content))
+        //        ))
+        //    .AsNoTracking()
+        //    .ToListAsync(cancellationToken);
+
+        return Result.Success<ICollection<QuestionResponse>>(questions);
+    
+    }
     public async Task<Result> ToggleStatusAsync(int PollId, int QuestionId, CancellationToken cancellationToken)
     {
 
@@ -107,9 +165,10 @@ public class QuestionService(AppDbContext context) : IQuestionService
         Question.IsActive = !Question.IsActive;
         await _context.SaveChangesAsync(cancellationToken);
 
+        await _distributedCashService.RemoveAsunc($"{_cashPrefix}-{PollId}");
+
         return Result.Success();
     }
-
     public async Task<Result> UpdateAsync(int PollId, int QuestionId, QuestionRequist requist, CancellationToken cancellationToken)
     {
 
@@ -157,6 +216,7 @@ public class QuestionService(AppDbContext context) : IQuestionService
 
         await _context.SaveChangesAsync(cancellationToken);
 
+        await _distributedCashService.RemoveAsunc($"{_cashPrefix}-{PollId}");
 
         return Result.Success();
 

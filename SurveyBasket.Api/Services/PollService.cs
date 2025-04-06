@@ -19,14 +19,17 @@ public class PollService : IPollService
     {
         _context = context;
     }
-    public async Task<Result<IEnumerable<PollResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<Result<List<PollResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var PollsList =  await _context.Polls.AsNoTracking().ToListAsync(cancellationToken);
+        var PollsList =  await _context.Polls
+            .AsNoTracking()
+            .ProjectToType<PollResponse>()
+            .ToListAsync(cancellationToken);
         
         if (!PollsList.Any())
-            return Result.Failure<IEnumerable<PollResponse>>(PollError.EmptyList);
+            return Result.Failure<List<PollResponse>>(PollError.EmptyList);
 
-        return Result.Success(PollsList.Adapt<IEnumerable<PollResponse>>());
+        return Result.Success(PollsList);
     }
     public async Task<Result<PollResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
@@ -37,7 +40,6 @@ public class PollService : IPollService
 
         return Result.Success<PollResponse>(poll.Adapt<PollResponse>());
     }
-
     public async Task<Result<PollResponse>> AddAsync(Poll poll, CancellationToken cancellationToken = default)
     {
         var isTitleExists = await _context.Polls.AnyAsync(p => p.Title == poll.Title );
@@ -51,7 +53,6 @@ public class PollService : IPollService
 
         return Result.Success(poll.Adapt<PollResponse>());
     }
-
     public async Task<Result> UpdateAsync(int id, PollRequist poll, CancellationToken cancellationToken)
     {
 
@@ -74,7 +75,6 @@ public class PollService : IPollService
 
         return Result.Success();
     }
-
     public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
         Poll? poll = await _context.Polls.FindAsync(id, cancellationToken);
@@ -101,4 +101,18 @@ public class PollService : IPollService
 
         return Result.Success();
     }
+    public async Task<Result<List<PollResponse>>> GetCurrentAsync(CancellationToken cancellationToken = default)
+    {
+        var PollsList = await _context.Polls
+            .Where(p => p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
+            .AsNoTracking()
+            .ProjectToType<PollResponse>()
+            .ToListAsync(cancellationToken);
+
+        if (!PollsList.Any())
+            return Result.Failure<List<PollResponse>>(PollError.EmptyList);
+
+        return Result.Success(PollsList);
+    }
+
 }

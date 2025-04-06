@@ -5,6 +5,7 @@ using Microsoft.Extensions.Primitives;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Contract.Auth;
+using SurveyBasket.Api.Contract.Registeration;
 using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Api.Services;
 
@@ -12,12 +13,14 @@ namespace SurveyBasket.Api.Controllers;
 [Route("[controller]")]
 [ApiController]
 public class AuthController(
+    ILogger<AuthController> logger,
     IAuthService authService ,
     IOptions<JwtOptions> options ,
     IOptionsSnapshot<JwtOptions> optionsSnapshot ,
     IOptionsMonitor<JwtOptions> optionsMonitor
     ) : ControllerBase
 {
+    private readonly ILogger<AuthController> logger = logger;
     private readonly IAuthService _authService = authService;
     private readonly IOptions<JwtOptions> _options = options;
     private readonly IOptionsSnapshot<JwtOptions> _optionsSnapshot = optionsSnapshot;
@@ -26,14 +29,9 @@ public class AuthController(
     [HttpPost("Login")]
     public async Task<IActionResult> Login( LoginRequist loginRequist , CancellationToken cancellationToken)
     {
-        var authResult = await _authService.GetTokenAsync(loginRequist.email, loginRequist.password, cancellationToken);
+        var result = await _authService.GetTokenAsync(loginRequist.email, loginRequist.password, cancellationToken);
 
-        if (authResult!.IsFailure)
-            return Problem(
-                statusCode: StatusCodes.Status400BadRequest,
-               
-                title: "Bad Request" );
-        return Ok(authResult.Value);
+        return result.IsSuccess ? Ok(result) : Problem(statusCode:result.Error.statusCode , title : result.Error.Code , detail : result.Error.Description);
     }
     [HttpPost("Refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenRequist Requist, CancellationToken cancellationToken)
@@ -49,5 +47,26 @@ public class AuthController(
 
         return result.IsSuccess ? Ok() : Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);
 
+    }
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterationRequist Requist, CancellationToken cancellationToken)
+    {
+        var result = await _authService.RegisterAsync(Requist, cancellationToken);
+
+        return result.IsSuccess ? Ok() : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
+    }
+    [HttpPost("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail(ConfirmEmailRequist Requist, CancellationToken cancellationToken)
+    {
+        var result = await _authService.ConfirmEmail(Requist);
+
+        return result.IsSuccess ? Ok() : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
+    }
+    [HttpPost("resend-email-confirmation")]
+    public async Task<IActionResult> ResendEmailConfirmation(ResendConfirmationEmailRequist Requist)
+    {
+        var result = await _authService.ResendConfirmationEmailRequistAsync(Requist);
+
+        return result.IsSuccess ? Ok() : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
     }
 }

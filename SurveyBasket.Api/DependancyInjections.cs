@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
 using SurveyBasket.Api.Errors;
+using SurveyBasket.Api.Settings;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace SurveyBasket.Api;
 
@@ -45,14 +47,30 @@ public static class DependancyInjections
         services.AddScoped<IPollService, PollService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IQuestionService, QuestionService>();
+        services.AddScoped<IVoteService, VoteService>();
+        services.AddScoped<IResultService,ResultService>();
+        services.AddScoped<IEmailSender,MailService>();
+
+        services.AddScoped<IDistributedCashService , DistributedCashService>();
+
         services.AddSingleton<IJwtProvider , JwtProvider>();
 
-        //services.AddExceptionHandler<GlobalExceptionHandler>();
-        //services.AddProblemDetails();
+        services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
+
+        services.Configure<IdentityOptions>(options =>
+        {
+            options.Password.RequiredLength = 6;
+            options.SignIn.RequireConfirmedEmail = true;
+            options.User.RequireUniqueEmail = false;
+        });
+
+        services.AddHttpContextAccessor();
+
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
 
-        Console.WriteLine($"Key: {jwtOptions.Key} => Issuer : {jwtOptions.Issuer} => aduiense {jwtOptions.Audience}");
         services.AddAuthentication(option =>
         {
             option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

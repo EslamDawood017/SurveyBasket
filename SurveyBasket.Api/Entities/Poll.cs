@@ -9,5 +9,6 @@ public sealed class Poll : AuditableEntity
     public DateOnly StartsAt { get; set; }
     public DateOnly EndsAt { get; set; }
     public ICollection<Question> Question { get; set; } = [];
+    public ICollection<Vote> Votes { get; set; } = [];
 
 }

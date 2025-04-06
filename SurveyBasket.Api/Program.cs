@@ -4,6 +4,7 @@ using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Api.Services;
+using Serilog;
 
 namespace SurveyBasket.Api
 {
@@ -23,6 +24,14 @@ namespace SurveyBasket.Api
 
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 
+            builder.Services.AddDistributedMemoryCache();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
+
             // Configure Swagger to use JWT Bearer Token
             builder.Services.AddSwaggerGen(c =>
             {
@@ -39,16 +48,17 @@ namespace SurveyBasket.Api
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            },
-            new List<string>()
-        }
-    });
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        },
+                        new List<string>()
+                    }
+                });
             });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -56,9 +66,9 @@ namespace SurveyBasket.Api
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
             }
 
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
@@ -67,7 +77,7 @@ namespace SurveyBasket.Api
             app.UseAuthentication();
 
             app.UseAuthorization();
-           
+
             app.MapControllers();
 
             //app.UseExceptionHandler();

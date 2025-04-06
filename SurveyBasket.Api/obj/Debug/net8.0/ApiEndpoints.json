@@ -1,5 +1,42 @@
 [
   {
+    "ContainingType": "SurveyBasket.Api.Controllers.VotesController",
+    "Method": "Start",
+    "RelativePath": "api/poll/{pollId}/vote",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.VotesController",
+    "Method": "Vote",
+    "RelativePath": "api/poll/{pollId}/vote",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "requist",
+        "Type": "SurveyBasket.Api.Contract.Vote.VoteRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
     "Method": "GetAll",
     "RelativePath": "api/Polls",
@@ -200,6 +237,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SurveyBasket.Api.Controllers.ResultController",
+    "Method": "PollVotes",
+    "RelativePath": "api/polls/{pollId}/Result/row-data",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.ResultController",
+    "Method": "PollVotesPerDay",
+    "RelativePath": "api/polls/{pollId}/Result/votes-Per-Day",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.ResultController",
+    "Method": "PollVotesPerQuestion",
+    "RelativePath": "api/polls/{pollId}/Result/votes-Per-Question",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "GetCurrent",
+    "RelativePath": "api/Polls/Current",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "ConfirmEmail",
+    "RelativePath": "Auth/confirm-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Requist",
+        "Type": "SurveyBasket.Api.Contract.Registeration.ConfirmEmailRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "Auth/Login",
@@ -226,6 +337,38 @@
       {
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Auth.RefreshTokenRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Requist",
+        "Type": "SurveyBasket.Api.Contract.Registeration.RegisterationRequist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "ResendEmailConfirmation",
+    "RelativePath": "Auth/resend-email-confirmation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Requist",
+        "Type": "SurveyBasket.Api.Contract.Registeration.ResendConfirmationEmailRequist",
         "IsRequired": true
       }
     ],
