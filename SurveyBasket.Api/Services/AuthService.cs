@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Api.Abstractions;
@@ -155,7 +156,7 @@ public class AuthService(
 
             _logger.LogInformation("Confirmation Code is :  {code}", code);
 
-            await SendConfirmationEmail(user, code);
+            BackgroundJob.Enqueue(() => SendConfirmationEmail(user, code));
 
             return Result.Success();
         }
@@ -212,13 +213,13 @@ public class AuthService(
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
 
-        await SendConfirmationEmail(user, code);
+        BackgroundJob.Enqueue(() => SendConfirmationEmail(user, code));
         
         _logger.LogInformation("Confirmation Code is :  {code}", code);
 
         return Result.Success();
     }
-    private async Task SendConfirmationEmail(ApplicationUser user, string code)
+    public async Task SendConfirmationEmail(ApplicationUser user, string code)
     {
         var origin = _httpContextAccessor.HttpContext.Request.Headers.Origin;
 

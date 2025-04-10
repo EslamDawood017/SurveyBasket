@@ -5,6 +5,8 @@ using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Api.Services;
 using Serilog;
+using Hangfire;
+using HangfireBasicAuthenticationFilter;
 
 namespace SurveyBasket.Api
 {
@@ -21,7 +23,7 @@ namespace SurveyBasket.Api
                 options.UseSqlServer(ConnectionString));
 
             builder.Services.AddDependancies(builder.Configuration);
-
+       
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 
             builder.Services.AddDistributedMemoryCache();
@@ -67,6 +69,20 @@ namespace SurveyBasket.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseHangfireDashboard("/jobs", new DashboardOptions
+            {
+                Authorization =
+                [
+                    new HangfireCustomBasicAuthenticationFilter
+                    {
+                        User = app.Configuration.GetValue<string>("HangfireSettings:username"),
+                        Pass = app.Configuration.GetValue<string>("HangfireSettings:password")
+                    }
+
+                ],
+                DashboardTitle = "Survey Basket Dashboard"
+            });
 
             app.UseSerilogRequestLogging();
 

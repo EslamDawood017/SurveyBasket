@@ -10,11 +10,12 @@ using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Api.Services;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using System.Text; 
 using Microsoft.Extensions.Options;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Settings;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Hangfire;
 
 namespace SurveyBasket.Api;
 
@@ -56,20 +57,26 @@ public static class DependancyInjections
         services.AddSingleton<IJwtProvider , JwtProvider>();
 
         services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
-
+        
         services.Configure<IdentityOptions>(options =>
         {
             options.Password.RequiredLength = 6;
             options.SignIn.RequireConfirmedEmail = true;
             options.User.RequireUniqueEmail = false;
         });
-
+        
         services.AddHttpContextAccessor();
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
 
         var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
+
+        services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
 
         services.AddAuthentication(option =>
         {
