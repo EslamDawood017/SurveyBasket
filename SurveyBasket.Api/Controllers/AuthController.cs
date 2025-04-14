@@ -31,7 +31,7 @@ public class AuthController(
     {
         var result = await _authService.GetTokenAsync(loginRequist.email, loginRequist.password, cancellationToken);
 
-        return result.IsSuccess ? Ok(result) : Problem(statusCode:result.Error.statusCode , title : result.Error.Code , detail : result.Error.Description);
+        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode:result.Error.statusCode , title : result.Error.Code , detail : result.Error.Description);
     }
     [HttpPost("Refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenRequist Requist, CancellationToken cancellationToken)
@@ -68,5 +68,23 @@ public class AuthController(
         var result = await _authService.ResendConfirmationEmailRequistAsync(Requist);
 
         return result.IsSuccess ? Ok() : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
+    }
+    [HttpPut("forget-Password")]
+    public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordRequist requist)
+    {
+        var result = await _authService.SendResetPasswordCodeAsync(requist.Email);
+
+        return result.IsSuccess
+            ? NoContent()
+            : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
+    }
+    [HttpPut("reset-Password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequist requist)
+    {
+        var result = await _authService.ResetPasswordAsync(requist);
+
+        return result.IsSuccess
+            ? NoContent()
+            : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
     }
 }

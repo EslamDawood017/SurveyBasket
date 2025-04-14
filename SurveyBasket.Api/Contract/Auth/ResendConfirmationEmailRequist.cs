@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Api.Contract.Registeration;
+﻿namespace SurveyBasket.Api.Contract.Auth;
 
 public record ResendConfirmationEmailRequist(
     string Email);

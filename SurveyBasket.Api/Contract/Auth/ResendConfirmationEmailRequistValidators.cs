@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace SurveyBasket.Api.Contract.Registeration;
+namespace SurveyBasket.Api.Contract.Auth;
 
 public class ResendConfirmationEmailRequistValidators : AbstractValidator<ResendConfirmationEmailRequist>
 {

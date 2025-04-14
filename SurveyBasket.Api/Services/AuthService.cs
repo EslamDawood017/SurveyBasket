@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentications;
+using SurveyBasket.Api.Consts;
 using SurveyBasket.Api.Contract.Auth;
 using SurveyBasket.Api.Contract.Registeration;
+using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Helpers;
 using SurveyBasket.Api.Interfaces;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,7 +22,8 @@ public class AuthService(
     SignInManager<ApplicationUser> signInManager,
     IEmailSender emailSender,
     IHttpContextAccessor httpContextAccessor,
-    IJwtProvider jwtProvider, 
+    IJwtProvider jwtProvider,
+    AppDbContext context,
     ILogger<AuthService> logger) : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
@@ -27,6 +31,7 @@ public class AuthService(
     private readonly IEmailSender _emailSender = emailSender;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IJwtProvider _jwtProvider = jwtProvider;
+    private readonly AppDbContext _context = context;
     private readonly ILogger<AuthService> _logger = logger;
     private readonly int _refreshTokenExpireDays = 14;
     public async Task<Result<AuthResponse>> GetTokenAsync(string email, string password, CancellationToken cancellationToken = default)
@@ -40,7 +45,19 @@ public class AuthService(
 
         if(result.Succeeded)
         {
-            var (token, expiredIn) = _jwtProvider.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var permission = await _context.Roles
+                .Join(_context.RoleClaims,
+                    role => role.Id,
+                    claim => claim.RoleId,
+                    (role, claim) => new { role, claim })
+                .Where(x => roles.Contains(x.role.Name!))
+                .Select(x => x.claim.ClaimValue)
+                .Distinct()
+                .ToListAsync(cancellationToken);
+
+            var (token, expiredIn) = _jwtProvider.GenerateToken(user , roles , permission!);
 
             var refreshToken = GenerateRefreshToken();
 
@@ -83,7 +100,20 @@ public class AuthService(
 
         userRefreshToken.RevokedOn = DateTime.UtcNow;
 
-        var (newToken, expiredIn) = _jwtProvider.GenerateToken(user);
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var permission = await _context.Roles
+            .Join(_context.RoleClaims,
+                role => role.Id,
+                claim => claim.RoleId,
+                (role, claim) => new { role, claim })
+            .Where(x => roles.Contains(x.role.Name!))
+            .Select(x => x.claim.ClaimValue)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+
+        var (newToken, expiredIn) = _jwtProvider.GenerateToken(user ,roles , permission );
 
         var NewRefreshToken = GenerateRefreshToken();
 
@@ -98,7 +128,7 @@ public class AuthService(
         await _userManager.UpdateAsync(user);
 
         var response = new AuthResponse(user.Id, user.Email, user.FirstName, user.LastName, newToken, expiredIn, NewRefreshToken, refreshTokenExpirtions);
-        
+
         return Result.Success<AuthResponse>(response);
 
     }
@@ -156,7 +186,7 @@ public class AuthService(
 
             _logger.LogInformation("Confirmation Code is :  {code}", code);
 
-            BackgroundJob.Enqueue(() => SendConfirmationEmail(user, code));
+            await SendConfirmationEmail(user, code);
 
             return Result.Success();
         }
@@ -190,7 +220,11 @@ public class AuthService(
         var result = await _userManager.ConfirmEmailAsync(user, code);
 
         if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, DefaultRoles.Member);
             return Result.Success();
+        }
+            
 
         var error = result.Errors.First();
 
@@ -213,13 +247,33 @@ public class AuthService(
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
 
-        BackgroundJob.Enqueue(() => SendConfirmationEmail(user, code));
+        await SendConfirmationEmail(user, code);
         
         _logger.LogInformation("Confirmation Code is :  {code}", code);
 
         return Result.Success();
     }
-    public async Task SendConfirmationEmail(ApplicationUser user, string code)
+    
+
+    public async Task<Result> SendResetPasswordCodeAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user is null)
+            return Result.Success();
+
+        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+
+        await SendResetPasswordEmail(user, code);
+
+        _logger.LogInformation("Reset Code is :  {code}", code);
+
+        return Result.Success();
+    }
+    private async Task SendConfirmationEmail(ApplicationUser user, string code)
     {
         var origin = _httpContextAccessor.HttpContext.Request.Headers.Origin;
 
@@ -229,7 +283,53 @@ public class AuthService(
                 { "{{action_url}}" , $"{origin}/auth/emailConfirmation?UserId={user.Id}&code={code}" }
             });
 
-        await _emailSender.SendEmailAsync(user.Email!, "Survey Basket : Email Confirmation", emailBody);
+        BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket : Email Confirmation", emailBody));
 
+        await Task.CompletedTask;
+    }
+    private async Task SendResetPasswordEmail(ApplicationUser user, string code)
+    {
+        var origin = _httpContextAccessor.HttpContext.Request.Headers.Origin;
+
+        var emailBody = EmailBodyBuilder.GenerateEmailBody("ForgetPassword", new Dictionary<string, string>
+            {
+                { "{{name}}" , user.FirstName },
+                { "{{action_url}}" , $"{origin}/auth/emailResetPassword?UserId={user.Email}&code={code}" }
+            });
+
+        BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket :Change Password", emailBody));
+
+        await Task.CompletedTask;
+    }
+
+    public async Task<Result> ResetPasswordAsync(ResetPasswordRequist requist)
+    {
+        var user = await _userManager.FindByEmailAsync(requist.Email);
+
+        if(!user.EmailConfirmed)
+            return Result.Failure(UserErrors.EmailNotComfirmed);
+
+        if (user is null )
+            return Result.Failure(UserErrors.InvalidCode);
+
+        IdentityResult result;
+
+        try
+        {
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(requist.Code));
+            result = await _userManager.ResetPasswordAsync(user, code, requist.NewPaswood);
+        }
+        catch(FormatException)
+        {
+            result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
+        }
+
+        if (result.Succeeded)
+            return Result.Success();
+
+        var error = result.Errors.First();
+
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status401Unauthorized));
     }
 }
+

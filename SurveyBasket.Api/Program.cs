@@ -25,7 +25,7 @@ namespace SurveyBasket.Api
             builder.Services.AddDependancies(builder.Configuration);
        
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
-
+             
             builder.Services.AddDistributedMemoryCache();
 
             Log.Logger = new LoggerConfiguration()
@@ -84,6 +84,13 @@ namespace SurveyBasket.Api
                 DashboardTitle = "Survey Basket Dashboard"
             });
 
+         
+            var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+            using var Scope = scopeFactory.CreateScope();
+            var notificationService = Scope.ServiceProvider.GetService<INotificationService>();
+
+            RecurringJob.AddOrUpdate("SendNewPollsNotification", () => notificationService.SendNewPollsNotification(null), Cron.Daily);
+
             app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
@@ -99,6 +106,8 @@ namespace SurveyBasket.Api
             //app.UseExceptionHandler();
 
             app.Run();
+
+            
         }
     }
 }

@@ -23,7 +23,5 @@ public class RegisterationRequistValidators : AbstractValidator<RegisterationReq
         RuleFor(x => x.LastName)
            .NotEmpty()
            .Length(3, 100); 
-
-
     }
 }

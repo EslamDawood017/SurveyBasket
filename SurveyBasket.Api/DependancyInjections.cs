@@ -16,6 +16,8 @@ using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Settings;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Hangfire;
+using Microsoft.AspNetCore.Authorization;
+using SurveyBasket.Authentication.Filters;
 
 namespace SurveyBasket.Api;
 
@@ -50,11 +52,17 @@ public static class DependancyInjections
         services.AddScoped<IQuestionService, QuestionService>();
         services.AddScoped<IVoteService, VoteService>();
         services.AddScoped<IResultService,ResultService>();
+        services.AddScoped<IUserService,UserService>();
         services.AddScoped<IEmailSender,MailService>();
+        services.AddScoped<IRoleSerivce,RoleService>();
+        services.AddScoped<INotificationService,NotificationService>();
 
         services.AddScoped<IDistributedCashService , DistributedCashService>();
 
         services.AddSingleton<IJwtProvider , JwtProvider>();
+
+        services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
         
@@ -77,6 +85,8 @@ public static class DependancyInjections
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
             .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
+
+        services.AddHangfireServer();
 
         services.AddAuthentication(option =>
         {

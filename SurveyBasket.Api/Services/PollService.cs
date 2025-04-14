@@ -1,11 +1,13 @@
 ﻿using Mapster;
 using SurveyBasket.Api.Abstractions;
+using SurveyBasket.Api.Consts;
 using SurveyBasket.Api.Contract.Poll;
 using SurveyBasket.Api.Contract.Requist;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Entities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
+using SurveyBasket.Authentication.Filters;
 using System.Collections.Generic;
 
 
@@ -19,6 +21,7 @@ public class PollService : IPollService
     {
         _context = context;
     }
+    [HasPermission(Permissions.GetPolls)]
     public async Task<Result<List<PollResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var PollsList =  await _context.Polls
