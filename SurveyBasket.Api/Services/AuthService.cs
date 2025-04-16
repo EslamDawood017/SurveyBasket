@@ -41,7 +41,10 @@ public class AuthService(
         if (user == null)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredetials);
 
-        var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
+        if(!user.IsActive)
+            return Result.Failure<AuthResponse>(UserErrors.DisabledUser);
+
+        var result = await _signInManager.PasswordSignInAsync(user, password, false, true);
 
         if(result.Succeeded)
         {
@@ -76,10 +79,11 @@ public class AuthService(
             return Result.Success<AuthResponse>(response);
         }
 
+        var error = result.IsNotAllowed
+            ? UserErrors.EmailNotComfirmed
+            : (result.IsLockedOut ? UserErrors.LockedUser : UserErrors.InvalidCredetials);
 
-        return Result.Failure<AuthResponse>(result.IsNotAllowed ? UserErrors.EmailNotComfirmed : UserErrors.InvalidCredetials);
-
-        
+        return Result.Failure<AuthResponse>(error);       
     }
     public async Task<Result<AuthResponse>> GetRefreshTokenAsync(string token, string refreshToken, CancellationToken cancellationToken = default)
     {
@@ -87,11 +91,19 @@ public class AuthService(
 
         if (userId is null)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredetials);
+       
 
         var user = await _userManager.FindByIdAsync(userId);
 
+        if (!user!.IsActive)
+            return Result.Failure<AuthResponse>(UserErrors.DisabledUser);
+
         if (user is null)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredetials);
+
+        if(user.LockoutEnd > DateTime.UtcNow)
+            return Result.Failure<AuthResponse>(UserErrors.LockedUser);
+
 
         var userRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken && x.IsActive);
 
@@ -159,7 +171,6 @@ public class AuthService(
     {
         return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
     }
-
     public async Task<Result> RegisterAsync(RegisterationRequist requist, CancellationToken cancellationToken = default)
     {
         var isExist = await _userManager.Users.AnyAsync(x=>x.Email == requist.Email , cancellationToken);
@@ -195,7 +206,6 @@ public class AuthService(
 
         return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
-
     public async Task<Result> ConfirmEmail(ConfirmEmailRequist requist)
     {
         var user = await _userManager.FindByIdAsync(requist.UserId.ToString());
@@ -230,7 +240,6 @@ public class AuthService(
 
         return Result.Failure(new Error(error.Code ,error.Description , StatusCodes.Status400BadRequest));
     }
-
     public async Task<Result> ResendConfirmationEmailRequistAsync(ResendConfirmationEmailRequist requist)
     {
         var user = await _userManager.FindByEmailAsync(requist.Email);
@@ -253,8 +262,6 @@ public class AuthService(
 
         return Result.Success();
     }
-    
-
     public async Task<Result> SendResetPasswordCodeAsync(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
@@ -301,7 +308,6 @@ public class AuthService(
 
         await Task.CompletedTask;
     }
-
     public async Task<Result> ResetPasswordAsync(ResetPasswordRequist requist)
     {
         var user = await _userManager.FindByEmailAsync(requist.Email);

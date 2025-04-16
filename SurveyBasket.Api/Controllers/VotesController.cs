@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Api.Consts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SurveyBasket.Api.Contract.Vote;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Extentions;
 using SurveyBasket.Api.Interfaces;
-using SurveyBasket.Api.Services;
-using System.Security.Claims;
+
 
 namespace SurveyBasket.Api.Controllers;
 [Route("api/poll/{pollId}/vote")]
 [ApiController]
 [Authorize(Roles = DefaultRoles.Member)]
+[EnableRateLimiting("Concurrency")]
 public class VotesController(IQuestionService questionService , IVoteService voteService) : ControllerBase
 {
     private readonly IQuestionService _questionService = questionService;

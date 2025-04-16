@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurveyBasket.Api.Consts;
+using SurveyBasket.Api.Contract.Common;
 using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
@@ -29,9 +30,9 @@ public class QuestionController(IQuestionService questionService) : ControllerBa
     }
     [HttpGet("")]
     [HasPermission(Permissions.GetQuestions)]
-    public async Task<IActionResult> GetAll([FromRoute] int pollId , CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll([FromRoute] int pollId ,[FromQuery] RequestFilter requestFilter , CancellationToken cancellationToken)
     {
-        var result = await _questionService.GetAllAsync(pollId ,cancellationToken);
+        var result = await _questionService.GetAllAsync(pollId , requestFilter ,cancellationToken);
 
         if(result.IsSuccess) 
             return Ok(result.Value);

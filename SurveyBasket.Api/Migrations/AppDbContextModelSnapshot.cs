@@ -342,6 +342,9 @@ namespace SurveyBasket.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -397,15 +400,16 @@ namespace SurveyBasket.Api.Migrations
                         {
                             Id = 100,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c30f48b3-faaf-4939-9ebf-3a44c9c099b6",
+                            ConcurrencyStamp = "84101219-602f-4dc0-b8ab-e19a1d75f1f6",
                             Email = "admin@survey-basket.com",
                             EmailConfirmed = true,
                             FirstName = "Survey Basket",
+                            IsActive = true,
                             LastName = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@SURVEY-BASKET.COM",
                             NormalizedUserName = "ADMIN@SURVEY-BASKET.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFvq3xmuVbLso6vFRyP1TXkY59HxfUqqxq9tapOOwdqHGvkR2SGhDCBzbgGlVCsGFQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENm5c37e6xLhOoAtpMJYfEnOYDSMrRBPcr0VJ959T+pLvoFXoz+YlZWmQ9qP/6L/Dg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "2B31AE14-E8C2-42A5-BF1B-C4A1A6AEE7F7",
                             TwoFactorEnabled = false,

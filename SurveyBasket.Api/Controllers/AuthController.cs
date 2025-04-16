@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using SurveyBasket.Api.Abstractions;
@@ -12,6 +13,7 @@ using SurveyBasket.Api.Services;
 namespace SurveyBasket.Api.Controllers;
 [Route("[controller]")]
 [ApiController]
+[EnableRateLimiting("IPLimiter")]
 public class AuthController(
     ILogger<AuthController> logger,
     IAuthService authService ,
@@ -25,6 +27,9 @@ public class AuthController(
     private readonly IOptions<JwtOptions> _options = options;
     private readonly IOptionsSnapshot<JwtOptions> _optionsSnapshot = optionsSnapshot;
     private readonly IOptionsMonitor<JwtOptions> _optionsMonitor = optionsMonitor;
+
+
+    
 
     [HttpPost("Login")]
     public async Task<IActionResult> Login( LoginRequist loginRequist , CancellationToken cancellationToken)

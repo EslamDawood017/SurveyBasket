@@ -7,6 +7,8 @@ using SurveyBasket.Api.Services;
 using Serilog;
 using Hangfire;
 using HangfireBasicAuthenticationFilter;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace SurveyBasket.Api
 {
@@ -103,7 +105,14 @@ namespace SurveyBasket.Api
 
             app.MapControllers();
 
-            //app.UseExceptionHandler();
+            app.UseExceptionHandler();
+
+            app.UseRateLimiter();
+
+            app.MapHealthChecks("health" , new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse 
+            });
 
             app.Run();
 

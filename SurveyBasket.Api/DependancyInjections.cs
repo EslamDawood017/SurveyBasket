@@ -18,6 +18,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using SurveyBasket.Authentication.Filters;
+using SurveyBasket.Api.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+using SurveyBasket.Api.Extentions;
 
 namespace SurveyBasket.Api;
 
@@ -107,6 +111,8 @@ public static class DependancyInjections
                 ValidAudience = jwtOptions?.Audience ,
             };
         });
+
+       
         //Adding Mapster 
         var mappingConfig = TypeAdapterConfig.GlobalSettings;
         mappingConfig.Scan(Assembly.GetExecutingAssembly());
@@ -116,6 +122,79 @@ public static class DependancyInjections
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddFluentValidationAutoValidation();
+
+        services.AddRateLimiter(rateLimiterOptions =>
+        {
+            rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+            rateLimiterOptions.AddPolicy("IPLimiter", httpContext => 
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey : httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory : _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 2,
+                        Window = TimeSpan.FromSeconds(20)
+                    }
+                )  
+                
+            );
+
+            rateLimiterOptions.AddPolicy("UserLimiter", httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.User.GetUserId(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 2,
+                        Window = TimeSpan.FromSeconds(20)
+                    }
+                )
+
+            );
+
+            
+            rateLimiterOptions.AddConcurrencyLimiter("Concurrency", options =>
+            {
+                options.PermitLimit = 1000;
+                options.QueueLimit = 100;
+                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            });
+
+            //2
+            //rateLimiterOptions.AddTokenBucketLimiter("tokens", options =>
+            //{
+            //    options.TokenLimit = 2;
+            //    options.QueueLimit = 1;
+            //    options.TokensPerPeriod = 2;
+            //    options.ReplenishmentPeriod = TimeSpan.FromSeconds(30);
+            //    options.AutoReplenishment = true;
+            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            //});
+
+            //3
+            //rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+            //{
+            //    options.PermitLimit = 2;
+            //    options.QueueLimit = 1;
+            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            //    options.Window = TimeSpan.FromSeconds(20);
+
+            //});
+
+            //4
+            //rateLimiterOptions.AddSlidingWindowLimiter("fixed", options =>
+            //{
+            //    options.PermitLimit = 2;
+            //    options.QueueLimit = 1;
+            //    options.SegmentsPerWindow = 2;   
+            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            //    options.Window = TimeSpan.FromSeconds(20);
+
+            //});
+        });
+
+        services.AddHealthChecks()
+            .AddSqlServer(name:"data base" , connectionString: configuration.GetConnectionString("DefualtConnection")!)
+            .AddCheck<MailProviderHealthCheck>(name:"Mail provider");
         return services;
     }
 }

@@ -1,15 +1,13 @@
 ﻿using Mapster;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Contract.Answer;
+using SurveyBasket.Api.Contract.Common;
 using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Data;
-using SurveyBasket.Api.Entities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices;
+using System.Linq.Dynamic.Core; 
+
 
 namespace SurveyBasket.Api.Services;
 
@@ -42,28 +40,31 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
 
         return Result.Success(question.Adapt<QuestionResponse>());  
     }
-    public async Task<Result<ICollection<QuestionResponse>>> GetAllAsync(int PollId, CancellationToken cancellationToken)
+    public async Task<Result<PignatedList<QuestionResponse>>> GetAllAsync(int PollId, RequestFilter requestFilter, CancellationToken cancellationToken)
     {
         var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId, cancellationToken);
 
         if (!isPollExist)
-            return Result.Failure <ICollection<QuestionResponse>> (PollError.PollNotFound);
+            return Result.Failure <PignatedList<QuestionResponse>> (PollError.PollNotFound);
 
-        var PollQuestions = await _context.Questions
-            .Where(x => x.PollId == PollId)
-            .Include(x => x.Answers)
-            //.Select(x => new QuestionResponse(
-            //    x.Id,
-            //    x.Content ,
-            //    x.Answers.Select(a => new AnswerResponse(a.Id , a.Content ))))
-            .ProjectToType<QuestionResponse>()
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
+        var query = _context.Questions
+            .Where(x => x.PollId == PollId && (string.IsNullOrEmpty(requestFilter.SearchValue) || x.Content.Contains(requestFilter.SearchValue)));
+            
+       if(!string.IsNullOrEmpty(requestFilter.SortColumn))
+       {
+            query.OrderBy($"{requestFilter.SortColumn} {requestFilter.SortDirection}");
+       }
+       var source = query
+                        .Include(x => x.Answers)
+                        .ProjectToType<QuestionResponse>()
+                        .AsNoTracking();
 
-        if (!PollQuestions.Any())
-            return Result.Failure<ICollection<QuestionResponse>>(QuestionError.EmptyList);
+        if (!query.Any())
+            return Result.Failure<PignatedList<QuestionResponse>>(QuestionError.EmptyList);
 
-        return Result.Success<ICollection<QuestionResponse>>(PollQuestions);
+        var questions = await PignatedList<QuestionResponse>.CreateAsync(source, requestFilter.PageNumber, requestFilter.PageSize, cancellationToken);
+
+        return Result.Success<PignatedList<QuestionResponse>>(questions);
     }
 
     public async Task<Result<QuestionResponse>> GetAsync(int PollId, int QuestionId ,CancellationToken cancellationToken)

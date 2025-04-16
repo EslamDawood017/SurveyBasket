@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.RateLimiting;
 using SurveyBasket.Api.Consts;
 using SurveyBasket.Api.Contract.Poll;
 using SurveyBasket.Api.Contract.Requist;
@@ -36,6 +37,7 @@ public class PollsController : ControllerBase
     }
     [HttpGet("Current")]
     [Authorize(Roles = DefaultRoles.Member)]
+    
     public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
     {
         var result = await _pollService.GetCurrentAsync(cancellationToken);
