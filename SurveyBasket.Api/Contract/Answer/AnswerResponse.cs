@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Api.Contract.Answer;
 
 public record AnswerResponse(
-    int Id ,
+    int Id,
     string Content
 );

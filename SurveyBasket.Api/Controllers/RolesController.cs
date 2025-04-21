@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurveyBasket.Api.Contract.Roles;
 using SurveyBasket.Api.Interfaces;
 using SurveyBasket.Authentication.Filters;
@@ -36,20 +35,20 @@ public class RolesController(IRoleSerivce roleSerivce) : ControllerBase
         var result = await _roleSerivce.AddAsync(requist);
 
         return result.IsSuccess
-            ? CreatedAtAction(nameof(GetById) , new { result.Value.Id} , result.Value)
+            ? CreatedAtAction(nameof(GetById), new { result.Value.Id }, result.Value)
             : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: result.Error.statusCode);
     }
     [HttpPut("{id}")]
     [HasPermission(Permissions.UpdateRole)]
-    public async Task<IActionResult> Update(int id , [FromBody] RoleRequist requist)
+    public async Task<IActionResult> Update(int id, [FromBody] RoleRequist requist)
     {
-        var result = await _roleSerivce.UpdateAsync(id ,requist);
+        var result = await _roleSerivce.UpdateAsync(id, requist);
 
         return result.IsSuccess
             ? NoContent()
             : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: result.Error.statusCode);
     }
-    [HttpPut("Toggle/{id}")]
+    [HttpPut("toggle/{id}")]
     [HasPermission(Permissions.UpdateRole)]
     public async Task<IActionResult> ToggleStatus(int id)
     {

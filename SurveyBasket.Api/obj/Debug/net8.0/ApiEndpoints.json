@@ -11,6 +11,11 @@
         "Name": "pollId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -32,6 +37,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Vote.VoteRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -43,7 +53,13 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -57,6 +73,48 @@
       {
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "GetAll",
+    "RelativePath": "api/Polls",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "Add",
+    "RelativePath": "api/Polls",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requist",
+        "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -73,6 +131,79 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "Update",
+    "RelativePath": "api/Polls/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "requist",
+        "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "Delete",
+    "RelativePath": "api/Polls/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "Get",
+    "RelativePath": "api/Polls/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -95,6 +226,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Requist.PollRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -111,6 +247,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -126,6 +267,32 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "TogglePublish",
+    "RelativePath": "api/Polls/{id}/TogglePublish",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -168,6 +335,11 @@
         "Name": "SortDirection",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -189,6 +361,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Question.QuestionRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -215,6 +392,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Question.QuestionRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -236,6 +418,11 @@
         "Name": "Id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -257,6 +444,11 @@
         "Name": "Id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -273,6 +465,11 @@
         "Name": "pollId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -289,6 +486,11 @@
         "Name": "pollId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -305,18 +507,45 @@
         "Name": "pollId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
-    "Method": "GetCurrent",
+    "Method": "GetCurrentV1",
     "RelativePath": "api/Polls/Current",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.PollsController",
+    "Method": "GetCurrentV2",
+    "RelativePath": "api/Polls/Current",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -330,6 +559,11 @@
       {
         "Name": "includeDeleted",
         "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -347,6 +581,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Roles.RoleRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -368,6 +607,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Roles.RoleRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -384,6 +628,11 @@
         "Name": "Id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -400,6 +649,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -416,6 +670,11 @@
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Registeration.ConfirmEmailRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -432,6 +691,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Registeration.ForgetPasswordRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -448,6 +712,11 @@
         "Name": "loginRequist",
         "Type": "SurveyBasket.Api.Contract.Auth.LoginRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -464,6 +733,11 @@
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Auth.RefreshTokenRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -480,6 +754,11 @@
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Registeration.RegisterationRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -496,6 +775,11 @@
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Auth.ResendConfirmationEmailRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -512,6 +796,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.Auth.ResetPasswordRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -528,6 +817,11 @@
         "Name": "Requist",
         "Type": "SurveyBasket.Api.Contract.Auth.RefreshTokenRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -539,7 +833,13 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -554,6 +854,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.User.CreateUserRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -570,6 +875,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.User.UpdateUserRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -586,6 +896,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -597,7 +912,13 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -612,6 +933,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.User.ChangePasswordRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -628,6 +954,11 @@
         "Name": "requist",
         "Type": "SurveyBasket.Api.Contract.User.UpdateUserProfileRequist",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -644,6 +975,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -660,6 +996,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "api-version",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

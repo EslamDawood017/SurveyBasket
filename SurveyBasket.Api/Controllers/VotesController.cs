@@ -9,21 +9,20 @@ using SurveyBasket.Api.Interfaces;
 namespace SurveyBasket.Api.Controllers;
 [Route("api/poll/{pollId}/vote")]
 [ApiController]
-[Authorize(Roles = DefaultRoles.Member)]
+[Authorize(Roles = DefaultRoles.Member.Name)]
 [EnableRateLimiting("Concurrency")]
-public class VotesController(IQuestionService questionService , IVoteService voteService) : ControllerBase
+public class VotesController(IQuestionService questionService, IVoteService voteService) : ControllerBase
 {
     private readonly IQuestionService _questionService = questionService;
     private readonly IVoteService _voteService = voteService;
-
     [HttpGet("")]
-    public async Task<IActionResult> Start([FromRoute] int pollId , CancellationToken cancellationToken)
+    public async Task<IActionResult> Start([FromRoute] int pollId, CancellationToken cancellationToken)
     {
         var UserId = User.GetUserId();
 
         var result = await _questionService.GetAvailableAsync(pollId, UserId!, cancellationToken);
-    
-        if(result.IsSuccess)
+
+        if (result.IsSuccess)
             return Ok(result.Value);
 
         return result.Error.Code == VoteError.DuplicatedVote.Code

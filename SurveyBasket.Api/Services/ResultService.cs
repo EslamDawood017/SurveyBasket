@@ -1,14 +1,12 @@
 ﻿using SurveyBasket.Api.Abstractions;
-using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Contract.Result;
 using SurveyBasket.Api.Data;
-using SurveyBasket.Api.Entities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
 
 namespace SurveyBasket.Api.Services;
 
-public class ResultService( AppDbContext context) : IResultService
+public class ResultService(AppDbContext context) : IResultService
 {
     private readonly AppDbContext _context = context;
 
@@ -35,8 +33,8 @@ public class ResultService( AppDbContext context) : IResultService
         return result is null
             ? Result.Failure<PollVotesResponse>(PollError.PollNotFound)
             : Result.Success(result);
-            
-               
+
+
     }
 
     public async Task<Result<IEnumerable<VotesPerDayResponse>>> GetVotesCountPerDayAsync(int pollId, CancellationToken cancellationToken)
@@ -48,15 +46,15 @@ public class ResultService( AppDbContext context) : IResultService
 
         var VotesPerDay = await _context.Votes
             .Where(p => p.PollId == pollId)
-            .GroupBy(p => new { Date = DateOnly.FromDateTime( p.SubmittedOn )})
-            .Select(p=> new VotesPerDayResponse(
-                p.Key.Date, 
+            .GroupBy(p => new { Date = DateOnly.FromDateTime(p.SubmittedOn) })
+            .Select(p => new VotesPerDayResponse(
+                p.Key.Date,
                 p.Count()
                 ))
             .ToListAsync(cancellationToken);
 
         return Result.Success<IEnumerable<VotesPerDayResponse>>(VotesPerDay);
-            
+
     }
     public async Task<Result<IEnumerable<VotePerQuestionResponse>>> GetVotesCountPerQuestionAsync(int pollId, CancellationToken cancellationToken = default)
     {
@@ -71,7 +69,8 @@ public class ResultService( AppDbContext context) : IResultService
                  a.Question.Content,
                  a.Question.Votes.GroupBy(x => new
                  {
-                     Answers = a.Answer.Id, AnswerContent = x.Answer.Content
+                     Answers = a.Answer.Id,
+                     AnswerContent = x.Answer.Content
                  }).Select(g => new VotesPerAnswerResponse(
                      g.Key.AnswerContent,
                      g.Count()))
@@ -81,4 +80,4 @@ public class ResultService( AppDbContext context) : IResultService
         return Result.Success<IEnumerable<VotePerQuestionResponse>>(votesPerQuestion);
 
     }
-} 
+}

@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Api.Consts;
-
-namespace SurveyBasket.Authentication.Filters;
+﻿namespace SurveyBasket.Authentication.Filters;
 
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
@@ -11,7 +9,7 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
         if (user is null || !user.IsAuthenticated)
             return;
 
-        var hasPermission = context.User.Claims.Any(x => x.Value == requirement.Permission );
+        var hasPermission = context.User.Claims.Any(x => x.Value == requirement.Permission);
 
         if (!hasPermission)
             return;

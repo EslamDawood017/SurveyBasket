@@ -2,11 +2,11 @@
 
 public class PignatedList<T>
 {
-    public PignatedList(List<T> items , int pageNumber , int count , int pageSize)
+    public PignatedList(List<T> items, int pageNumber, int count, int pageSize)
     {
-        Items = items ;
-        PageNumber = pageNumber ;
-        TotalPages = (int)Math.Ceiling(count/(double)pageSize) ;
+        Items = items;
+        PageNumber = pageNumber;
+        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
     }
     public List<T> Items { get; private set; }
     public int PageNumber { get; private set; }
@@ -14,7 +14,7 @@ public class PignatedList<T>
     public bool HasPerviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
 
-    public static async Task<PignatedList<T>> CreateAsync(IQueryable<T> source , int pageNumber , int pageSize , CancellationToken cancellationToken)
+    public static async Task<PignatedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         var count = await source.CountAsync(cancellationToken);
         var items = await source
@@ -22,6 +22,6 @@ public class PignatedList<T>
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        return new PignatedList<T>(items , pageNumber , count , pageSize);  
+        return new PignatedList<T>(items, pageNumber, count, pageSize);
     }
 }

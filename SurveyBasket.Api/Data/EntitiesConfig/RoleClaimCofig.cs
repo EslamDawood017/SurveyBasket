@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SurveyBasket.Api.Consts;
 
 namespace SurveyBasket.Api.Data.EntitiesConfig;
 
@@ -11,14 +10,14 @@ public class RoleClaimCofig : IEntityTypeConfiguration<IdentityRoleClaim<int>>
 
         var adminClaims = new List<IdentityRoleClaim<int>>();
 
-        for(int i = 0; i < permissions.Count; i++)
+        for (int i = 0; i < permissions.Count; i++)
         {
             adminClaims.Add(new IdentityRoleClaim<int>
             {
                 Id = i + 1,
                 ClaimType = Permissions.Type,
                 ClaimValue = permissions[i],
-                RoleId = DefaultRoles.AdminRoleId
+                RoleId = DefaultRoles.Admin.Id
             });
         }
         builder.HasData(adminClaims);

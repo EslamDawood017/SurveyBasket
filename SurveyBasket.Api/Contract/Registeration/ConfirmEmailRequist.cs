@@ -1,4 +1,4 @@
 ﻿namespace SurveyBasket.Api.Contract.Registeration;
 
-public record ConfirmEmailRequist( int UserId , string Code );
+public record ConfirmEmailRequist(int UserId, string Code);
 

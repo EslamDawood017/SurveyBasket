@@ -6,26 +6,26 @@ using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
-using System.Linq.Dynamic.Core; 
+using System.Linq.Dynamic.Core;
 
 
 namespace SurveyBasket.Api.Services;
 
-public class QuestionService(AppDbContext context , IDistributedCashService distributedCashService) : IQuestionService
+public class QuestionService(AppDbContext context, IDistributedCashService distributedCashService) : IQuestionService
 {
     private readonly AppDbContext _context = context;
     private readonly IDistributedCashService _distributedCashService = distributedCashService;
     private const string _cashPrefix = "availableQuestion";
     public async Task<Result<QuestionResponse>> AddAsync(int PollId, QuestionRequist requist, CancellationToken cancellationToken)
     {
-        var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId , cancellationToken);
+        var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId, cancellationToken);
 
-        if(!isPollExist)
+        if (!isPollExist)
             return Result.Failure<QuestionResponse>(PollError.PollNotFound);
 
-        var isConentExist = await _context.Questions.AnyAsync(x => x.Content == requist.Content && x.PollId == PollId , cancellationToken);
+        var isConentExist = await _context.Questions.AnyAsync(x => x.Content == requist.Content && x.PollId == PollId, cancellationToken);
 
-        if(isConentExist)
+        if (isConentExist)
             return Result.Failure<QuestionResponse>(QuestionError.DuplicatedQuestionContent);
 
         var question = requist.Adapt<Question>();
@@ -38,26 +38,26 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
 
         await _distributedCashService.RemoveAsunc($"{_cashPrefix}-{PollId}");
 
-        return Result.Success(question.Adapt<QuestionResponse>());  
+        return Result.Success(question.Adapt<QuestionResponse>());
     }
     public async Task<Result<PignatedList<QuestionResponse>>> GetAllAsync(int PollId, RequestFilter requestFilter, CancellationToken cancellationToken)
     {
         var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId, cancellationToken);
 
         if (!isPollExist)
-            return Result.Failure <PignatedList<QuestionResponse>> (PollError.PollNotFound);
+            return Result.Failure<PignatedList<QuestionResponse>>(PollError.PollNotFound);
 
         var query = _context.Questions
             .Where(x => x.PollId == PollId && (string.IsNullOrEmpty(requestFilter.SearchValue) || x.Content.Contains(requestFilter.SearchValue)));
-            
-       if(!string.IsNullOrEmpty(requestFilter.SortColumn))
-       {
+
+        if (!string.IsNullOrEmpty(requestFilter.SortColumn))
+        {
             query.OrderBy($"{requestFilter.SortColumn} {requestFilter.SortDirection}");
-       }
-       var source = query
-                        .Include(x => x.Answers)
-                        .ProjectToType<QuestionResponse>()
-                        .AsNoTracking();
+        }
+        var source = query
+                         .Include(x => x.Answers)
+                         .ProjectToType<QuestionResponse>()
+                         .AsNoTracking();
 
         if (!query.Any())
             return Result.Failure<PignatedList<QuestionResponse>>(QuestionError.EmptyList);
@@ -67,34 +67,34 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
         return Result.Success<PignatedList<QuestionResponse>>(questions);
     }
 
-    public async Task<Result<QuestionResponse>> GetAsync(int PollId, int QuestionId ,CancellationToken cancellationToken)
+    public async Task<Result<QuestionResponse>> GetAsync(int PollId, int QuestionId, CancellationToken cancellationToken)
     {
         var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId, cancellationToken);
 
         if (!isPollExist)
             return Result.Failure<QuestionResponse>(PollError.PollNotFound);
 
-        var isQuestionExist = await _context.Questions.AnyAsync(x => x.Id ==  QuestionId , cancellationToken);
+        var isQuestionExist = await _context.Questions.AnyAsync(x => x.Id == QuestionId, cancellationToken);
 
-        if(!isQuestionExist)
+        if (!isQuestionExist)
             return Result.Failure<QuestionResponse>(QuestionError.QuestionNotFound);
 
         var Question = await _context.Questions
             .Include(x => x.Answers)
-            .SingleOrDefaultAsync(x => x.Id == QuestionId && x.PollId == PollId , cancellationToken);
+            .SingleOrDefaultAsync(x => x.Id == QuestionId && x.PollId == PollId, cancellationToken);
 
         return Result.Success(Question.Adapt<QuestionResponse>());
-       
+
     }
     public async Task<Result<ICollection<QuestionResponse>>> GetAvailableAsync(int PollId, int UserId, CancellationToken cancellationToken)
     {
-        var hasVoted = await _context.Votes.AnyAsync(v => v.PollId == PollId && v.ApplicationUserId == UserId , cancellationToken);
+        var hasVoted = await _context.Votes.AnyAsync(v => v.PollId == PollId && v.ApplicationUserId == UserId, cancellationToken);
 
         if (hasVoted)
             return Result.Failure<ICollection<QuestionResponse>>(VoteError.DuplicatedVote);
 
-        var isPollExist = await _context.Polls.AnyAsync( p => p.Id == PollId && p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow));
-      
+        var isPollExist = await _context.Polls.AnyAsync(p => p.Id == PollId && p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow));
+
         if (!isPollExist)
             return Result.Failure<ICollection<QuestionResponse>>(PollError.PollNotFound);
 
@@ -104,7 +104,7 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
 
         ICollection<QuestionResponse> questions = [];
 
-        if(cashQuestions is null)
+        if (cashQuestions is null)
         {
             Console.WriteLine("Result From DataBase");
             questions = await _context.Questions
@@ -143,7 +143,7 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
         //    .ToListAsync(cancellationToken);
 
         return Result.Success<ICollection<QuestionResponse>>(questions);
-    
+
     }
     public async Task<Result> ToggleStatusAsync(int PollId, int QuestionId, CancellationToken cancellationToken)
     {
@@ -190,12 +190,12 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
                 q.Content == requist.Content,
                 cancellationToken);
 
-        if(isQuestioncontentExist)
+        if (isQuestioncontentExist)
             return Result.Failure(QuestionError.DuplicatedQuestionContent);
 
         var question = await _context.Questions
             .Include(x => x.Answers)
-            .SingleOrDefaultAsync(q => q.Id == QuestionId && q.PollId == PollId , cancellationToken);
+            .SingleOrDefaultAsync(q => q.Id == QuestionId && q.PollId == PollId, cancellationToken);
 
         question.Content = requist.Content;
 
@@ -205,12 +205,12 @@ public class QuestionService(AppDbContext context , IDistributedCashService dist
         // add new answer 
         var newAnswers = requist.Answers.Except(currentAnswer).ToList();
 
-        foreach(var answer in newAnswers)
+        foreach (var answer in newAnswers)
         {
             question.Answers.Add(new Answer { Content = answer });
         }
 
-        foreach(var answer in question.Answers.ToList())
+        foreach (var answer in question.Answers.ToList())
         {
             answer.IsActive = requist.Answers.Contains(answer.Content);
         }

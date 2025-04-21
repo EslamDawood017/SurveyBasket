@@ -6,9 +6,9 @@ public class VoteRequistValidator : AbstractValidator<VoteRequist>
 {
     public VoteRequistValidator()
     {
-        RuleFor(x =>x.Answers).NotEmpty();
+        RuleFor(x => x.Answers).NotEmpty();
 
         RuleForEach(x => x.Answers)
-            .SetInheritanceValidator( v => v.Add(new VoteAnswerRequistValidator()));
+            .SetInheritanceValidator(v => v.Add(new VoteAnswerRequistValidator()));
     }
 }

@@ -1,0 +1,408 @@
+2025-04-21 10:51:57.102 +02:00 [INF] Start installing Hangfire SQL objects...
+2025-04-21 10:52:38.453 +02:00 [WRN] An exception occurred while trying to perform the migration. Retrying...
+Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, TimeoutTimer timeout, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool, Func`3 accessTokenCallback)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Hangfire.SqlServer.SqlServerStorage.CreateAndOpenConnection() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 393
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TContext,TResult](DbConnection dedicatedConnection, Func`4 func, TContext context) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 278
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection(DbConnection dedicatedConnection, Action`2 action) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 255
+   at Hangfire.SqlServer.SqlServerStorage.Initialize() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 452
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2025-04-21 10:52:38.491 +02:00 [WRN] An exception occurred while trying to perform the migration. Retrying...
+Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Hangfire.SqlServer.SqlServerStorage.CreateAndOpenConnection() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 393
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TContext,TResult](DbConnection dedicatedConnection, Func`4 func, TContext context) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 278
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection(DbConnection dedicatedConnection, Action`2 action) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 255
+   at Hangfire.SqlServer.SqlServerStorage.Initialize() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 452
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2025-04-21 10:52:38.497 +02:00 [WRN] An exception occurred while trying to perform the migration.
+Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Hangfire.SqlServer.SqlServerStorage.CreateAndOpenConnection() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 393
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TContext,TResult](DbConnection dedicatedConnection, Func`4 func, TContext context) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 278
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection(DbConnection dedicatedConnection, Action`2 action) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 255
+   at Hangfire.SqlServer.SqlServerStorage.Initialize() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 452
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2025-04-21 10:52:38.502 +02:00 [WRN] Was unable to perform the Hangfire schema migration due to an exception. Ignore this message unless you've just installed or upgraded Hangfire.
+Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Hangfire.SqlServer.SqlServerStorage.CreateAndOpenConnection() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 393
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TContext,TResult](DbConnection dedicatedConnection, Func`4 func, TContext context) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 278
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection(DbConnection dedicatedConnection, Action`2 action) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 255
+   at Hangfire.SqlServer.SqlServerStorage.Initialize() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 452
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2025-04-21 10:52:38.508 +02:00 [ERR] Was unable to use the TryAutoDetectSchemaDependentOptions option due to an exception.
+Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Hangfire.SqlServer.SqlServerStorage.CreateAndOpenConnection() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 393
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TContext,TResult](DbConnection dedicatedConnection, Func`4 func, TContext context) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 278
+   at Hangfire.SqlServer.SqlServerStorage.UseConnection[TResult](DbConnection dedicatedConnection, Func`3 action) in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 266
+   at Hangfire.SqlServer.SqlServerStorage.Initialize() in C:\projects\hangfire-525\src\Hangfire.SqlServer\SqlServerStorage.cs:line 482
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2025-04-21 10:53:49.177 +02:00 [INF] Start installing Hangfire SQL objects...
+2025-04-21 10:53:49.673 +02:00 [INF] Hangfire SQL objects installed.
+2025-04-21 10:53:50.464 +02:00 [INF] Starting Hangfire Server using job storage: 'SQL Server: .@SurveyBasketJobs'
+2025-04-21 10:53:50.465 +02:00 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2025-04-21 10:53:50.465 +02:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-04-21 10:53:50.480 +02:00 [DBG] Execution loop BackgroundServerProcess:1153bc9f has started in 2.4509 ms
+2025-04-21 10:53:50.559 +02:00 [INF] Server desktop-esn8ich:19876:85b532c4 successfully announced in 76.4159 ms
+2025-04-21 10:53:50.562 +02:00 [DBG] Execution loop ServerHeartbeatProcess:addc457e has started in 0.9529 ms
+2025-04-21 10:53:50.562 +02:00 [INF] Server desktop-esn8ich:19876:85b532c4 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, SqlServerHeartbeatProcess, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-04-21 10:53:50.564 +02:00 [DBG] Execution loop ServerWatchdog:4a0b4fd7 has started in 0.3662 ms
+2025-04-21 10:53:50.564 +02:00 [DBG] Execution loop ServerJobCancellationWatcher:348887ac has started in 0.1904 ms
+2025-04-21 10:53:50.565 +02:00 [DBG] Execution loop ExpirationManager:85f3d3e1 has started in 0.2963 ms
+2025-04-21 10:53:50.565 +02:00 [DBG] Execution loop CountersAggregator:8d99bcfb has started in 0.0999 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:0c1dcaa7 has started in 2.0514 ms
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop Worker:132551e3 has started in 2.7734 ms
+2025-04-21 10:53:50.565 +02:00 [DBG] Execution loop Worker:25956580 has started in 0.301 ms
+2025-04-21 10:53:50.565 +02:00 [DBG] Execution loop Worker:62157ad2 has started in 0.4167 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:ee3ce4de has started in 0.7169 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:8aaff516 has started in 0.8884 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:fa7f40e3 has started in 1.0708 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:3e358205 has started in 1.2173 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:226b69bb has started in 1.349 ms
+2025-04-21 10:53:50.566 +02:00 [DBG] Execution loop Worker:6936da8b has started in 1.4657 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:8db4f1d6 has started in 1.5922 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:5084edd4 has started in 1.6881 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:4686419c has started in 1.7995 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:1c1e19ff has started in 2.1864 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:1bc56632 has started in 2.3328 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Execution loop Worker:564dca3c has started in 2.4592 ms
+2025-04-21 10:53:50.567 +02:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-04-21 10:53:50.567 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop Worker:64a9fabe has started in 2.5514 ms
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop Worker:7538995d has started in 2.6722 ms
+2025-04-21 10:53:50.565 +02:00 [DBG] Execution loop SqlServerHeartbeatProcess:9099d30b has started in 0.1116 ms
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop Worker:0458e72e has started in 2.8696 ms
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop Worker:cb5c4d78 has started in 3.0091 ms
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop DelayedJobScheduler:437d63b6 has started in 0.1797 ms
+2025-04-21 10:53:50.568 +02:00 [INF] Server desktop-esn8ich:19876:85b532c4 all the dispatchers started
+2025-04-21 10:53:50.568 +02:00 [DBG] Execution loop RecurringJobScheduler:f83c98c6 has started in 0.1366 ms
+2025-04-21 10:53:50.853 +02:00 [DBG] Removing outdated records from the 'Job' table...
+2025-04-21 10:53:51.113 +02:00 [DBG] Removing outdated records from the 'List' table...
+2025-04-21 10:53:51.236 +02:00 [DBG] Removing outdated records from the 'Set' table...
+2025-04-21 10:53:51.260 +02:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-04-21 10:53:51.345 +02:00 [DBG] 1 scheduled job(s) processed by scheduler.
+2025-04-21 10:53:53.580 +02:00 [WRN] Failed to process the job '30014': an exception occurred. Retry attempt 8 of 10 will be performed in 00:43:36.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at SurveyBasket.Api.Services.NotificationService.SendNewPollsNotification(Nullable`1 pollId) in C:\Users\dawoo\Desktop\New Project\SurveyBasket\SurveyBasket.Api\Services\NotificationService.cs:line 41
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2025-04-21 10:54:20.580 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:54:42.175 +02:00 [WRN] Failed to determine the https port for redirect.
+2025-04-21 10:54:42.708 +02:00 [INF] HTTP POST /Auth/Login responded 200 in 535.7640 ms
+2025-04-21 10:54:50.598 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:54:53.369 +02:00 [INF] HTTP GET /api/Roles responded 401 in 12.1285 ms
+2025-04-21 10:55:20.606 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:55:38.931 +02:00 [INF] HTTP GET /api/Polls responded 401 in 7.3001 ms
+2025-04-21 10:55:50.623 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:56:02.659 +02:00 [INF] HTTP GET /api/Polls responded 200 in 103.6123 ms
+2025-04-21 10:56:20.632 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:56:50.649 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:57:20.668 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:57:50.681 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:58:20.686 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:58:50.695 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:58:51.259 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 10:59:20.714 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 10:59:50.732 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:00:20.739 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:00:50.752 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:01:20.770 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:01:50.775 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:02:20.793 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:02:50.806 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:03:20.825 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:03:50.830 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:03:51.298 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:04:20.850 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:04:50.863 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:05:20.878 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:05:50.895 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:06:20.919 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:06:50.925 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:07:20.932 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:07:50.935 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:08:20.954 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:08:50.968 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:08:51.344 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:09:20.982 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:09:50.997 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:10:21.009 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:10:51.023 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:11:21.028 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:11:51.039 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:12:21.051 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:12:51.067 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:13:21.081 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:13:51.095 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:13:51.386 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:14:21.103 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:14:51.121 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:15:21.127 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:15:51.164 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:16:21.200 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:16:51.216 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:17:21.223 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:17:51.243 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:18:21.255 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:18:51.270 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:18:51.424 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:19:21.300 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:19:51.304 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:20:21.316 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:20:51.325 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:21:21.342 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:21:51.359 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:22:21.371 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:22:51.385 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:23:21.393 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:23:51.269 +02:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-04-21 11:23:51.277 +02:00 [DBG] Removing outdated records from the 'Job' table...
+2025-04-21 11:23:51.284 +02:00 [DBG] Removing outdated records from the 'List' table...
+2025-04-21 11:23:51.287 +02:00 [DBG] Removing outdated records from the 'Set' table...
+2025-04-21 11:23:51.289 +02:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-04-21 11:23:51.411 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:23:51.469 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:24:21.417 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:24:51.435 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:25:21.450 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:25:51.470 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:26:21.479 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:26:51.500 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:27:21.515 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:27:51.543 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:28:21.559 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:28:51.512 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:28:51.577 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:29:21.587 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:29:51.591 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:30:21.601 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:30:51.608 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:31:21.618 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:31:51.630 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:32:21.639 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:32:51.644 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:33:21.663 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:33:51.552 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:33:51.684 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:34:21.702 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:34:51.705 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:35:21.716 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:35:51.734 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:36:21.741 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:36:51.749 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:37:21.760 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:37:38.260 +02:00 [DBG] 1 scheduled job(s) processed by scheduler.
+2025-04-21 11:37:38.313 +02:00 [WRN] Failed to process the job '30014': an exception occurred. Retry attempt 9 of 10 will be performed in 01:10:10.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at SurveyBasket.Api.Services.NotificationService.SendNewPollsNotification(Nullable`1 pollId) in C:\Users\dawoo\Desktop\New Project\SurveyBasket\SurveyBasket.Api\Services\NotificationService.cs:line 41
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2025-04-21 11:37:51.782 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:38:21.788 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:38:51.592 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:38:51.798 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:39:21.817 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:39:51.827 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:40:21.831 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:40:51.847 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:41:21.857 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:41:51.862 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:42:21.871 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:42:51.888 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:43:21.898 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:43:51.636 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:43:51.904 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:44:21.922 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:45:04.333 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:45:34.345 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:46:04.351 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:46:34.356 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:47:04.368 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:47:34.386 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:48:04.395 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:48:34.401 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:49:04.028 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:49:04.409 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:49:34.413 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:50:04.427 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:50:34.433 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:51:04.452 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:51:34.469 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:52:04.486 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:52:34.503 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:53:04.519 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:53:34.521 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:54:03.652 +02:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-04-21 11:54:03.674 +02:00 [DBG] Removing outdated records from the 'Job' table...
+2025-04-21 11:54:03.681 +02:00 [DBG] Removing outdated records from the 'List' table...
+2025-04-21 11:54:03.684 +02:00 [DBG] Removing outdated records from the 'Set' table...
+2025-04-21 11:54:03.687 +02:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-04-21 11:54:04.076 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:54:04.537 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:54:34.551 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:55:04.562 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:55:34.578 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:56:04.597 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:56:34.610 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:57:04.614 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:57:34.629 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:58:04.644 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:58:34.669 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:59:04.109 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 11:59:04.679 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 11:59:34.696 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:00:04.716 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:00:34.729 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:01:04.747 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:01:34.758 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:02:04.765 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:02:34.776 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:03:04.794 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:03:34.805 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:04:04.146 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:04:04.826 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:04:34.831 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:05:04.839 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:05:34.854 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:06:04.859 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:06:34.869 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:07:04.883 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:07:34.898 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:08:04.905 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:08:34.924 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:09:04.181 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:09:04.934 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:09:34.950 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:10:04.958 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:10:34.976 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:11:04.990 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:11:35.007 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:12:05.022 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:12:35.033 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:13:05.048 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:13:35.054 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:14:04.225 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:14:05.060 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:14:35.077 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:15:05.090 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:15:45.758 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:16:15.773 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:16:45.789 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:17:15.809 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:17:45.816 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:18:15.837 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:18:45.842 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:19:14.916 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:19:15.857 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:19:45.863 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:20:15.878 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:20:45.890 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:21:15.907 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:21:45.925 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:22:15.941 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:22:45.956 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:23:15.966 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:23:45.975 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:24:14.362 +02:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-04-21 12:24:14.370 +02:00 [DBG] Removing outdated records from the 'Job' table...
+2025-04-21 12:24:14.378 +02:00 [DBG] Removing outdated records from the 'List' table...
+2025-04-21 12:24:14.381 +02:00 [DBG] Removing outdated records from the 'Set' table...
+2025-04-21 12:24:14.384 +02:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-04-21 12:24:14.945 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:24:15.986 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:24:46.003 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:25:16.017 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:25:46.034 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:26:16.050 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:26:46.065 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:27:16.075 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:27:46.080 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:28:16.096 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:28:46.104 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:29:14.977 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:29:16.114 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:29:46.130 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:30:16.152 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:30:46.218 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:31:16.237 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:31:46.268 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:32:16.300 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:32:46.319 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:33:16.336 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:33:46.355 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:34:15.035 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:34:16.365 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:34:46.378 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:35:16.388 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:35:46.407 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:36:16.415 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:36:46.427 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:37:16.441 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:37:46.458 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:38:16.469 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:38:46.480 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:39:15.068 +02:00 [DBG] Aggregating records in 'Counter' table...
+2025-04-21 12:39:16.486 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent
+2025-04-21 12:39:46.491 +02:00 [DBG] Server desktop-esn8ich:19876:85b532c4 heartbeat successfully sent

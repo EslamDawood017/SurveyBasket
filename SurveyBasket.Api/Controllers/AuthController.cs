@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
-using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentications;
 using SurveyBasket.Api.Contract.Auth;
 using SurveyBasket.Api.Contract.Registeration;
 using SurveyBasket.Api.Interfaces;
-using SurveyBasket.Api.Services;
 
 namespace SurveyBasket.Api.Controllers;
 [Route("[controller]")]
@@ -16,9 +12,9 @@ namespace SurveyBasket.Api.Controllers;
 [EnableRateLimiting("IPLimiter")]
 public class AuthController(
     ILogger<AuthController> logger,
-    IAuthService authService ,
-    IOptions<JwtOptions> options ,
-    IOptionsSnapshot<JwtOptions> optionsSnapshot ,
+    IAuthService authService,
+    IOptions<JwtOptions> options,
+    IOptionsSnapshot<JwtOptions> optionsSnapshot,
     IOptionsMonitor<JwtOptions> optionsMonitor
     ) : ControllerBase
 {
@@ -28,22 +24,19 @@ public class AuthController(
     private readonly IOptionsSnapshot<JwtOptions> _optionsSnapshot = optionsSnapshot;
     private readonly IOptionsMonitor<JwtOptions> _optionsMonitor = optionsMonitor;
 
-
-    
-
-    [HttpPost("Login")]
-    public async Task<IActionResult> Login( LoginRequist loginRequist , CancellationToken cancellationToken)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginRequist loginRequist, CancellationToken cancellationToken)
     {
         var result = await _authService.GetTokenAsync(loginRequist.email, loginRequist.password, cancellationToken);
 
-        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode:result.Error.statusCode , title : result.Error.Code , detail : result.Error.Description);
+        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
     }
-    [HttpPost("Refresh")]
+    [HttpPost("refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenRequist Requist, CancellationToken cancellationToken)
     {
         var result = await _authService.GetRefreshTokenAsync(Requist.token, Requist.refreshToken, cancellationToken);
 
-        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);   
+        return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);
     }
     [HttpPost("revoke-refresh-token")]
     public async Task<IActionResult> RevokeResfreshToken(RefreshTokenRequist Requist, CancellationToken cancellationToken)

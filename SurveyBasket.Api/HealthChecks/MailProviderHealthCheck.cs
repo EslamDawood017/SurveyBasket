@@ -3,7 +3,6 @@ using MailKit.Security;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using SurveyBasket.Api.Settings;
-using System.Reflection.Metadata.Ecma335;
 
 namespace SurveyBasket.Api.HealthChecks;
 
@@ -19,12 +18,12 @@ public class MailProviderHealthCheck(IOptions<MailSettings> mailSetting) : IHeal
             smtp.Connect(mailSetting.Host, mailSetting.Port, SecureSocketOptions.StartTls);
 
             smtp.Authenticate(mailSetting.Mail, mailSetting.Password);
-        
-           return await Task.FromResult(HealthCheckResult.Healthy());
+
+            return await Task.FromResult(HealthCheckResult.Healthy());
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
-            return await Task.FromResult(HealthCheckResult.Unhealthy(exception : ex));
+            return await Task.FromResult(HealthCheckResult.Unhealthy(exception: ex));
         }
     }
 }

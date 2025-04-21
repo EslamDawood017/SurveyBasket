@@ -2,7 +2,7 @@
 
 public static class EmailBodyBuilder
 {
-    public static string GenerateEmailBody(string template , Dictionary<string, string> TemplateModel)
+    public static string GenerateEmailBody(string template, Dictionary<string, string> TemplateModel)
     {
         var templatePath = $"{Directory.GetCurrentDirectory()}/Templates/{template}.html";
 
@@ -12,7 +12,7 @@ public static class EmailBodyBuilder
 
         streamReader.Close();
 
-        foreach ( var item in TemplateModel )
+        foreach (var item in TemplateModel)
         {
             body = body.Replace(item.Key, item.Value);
         }

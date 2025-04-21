@@ -9,7 +9,7 @@ namespace SurveyBasket.Api.Authentications;
 
 public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
-    
+
     private readonly JwtOptions _options = options.Value;
 
     public (string Token, int ExpiredIn) GenerateToken(ApplicationUser user, IEnumerable<string> roles, IEnumerable<string> permissions)
@@ -27,9 +27,9 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
         };
 
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key!));
-    
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey , SecurityAlgorithms.HmacSha256);
- 
+
+        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
         var token = new JwtSecurityToken(
             issuer: _options.Issuer,
             audience: _options.Audience,
@@ -38,9 +38,9 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
             signingCredentials: signingCredentials);
 
 
-      
 
-        return (token: new JwtSecurityTokenHandler().WriteToken(token), _options.ExpiryMinute * 60 );
+
+        return (token: new JwtSecurityTokenHandler().WriteToken(token), _options.ExpiryMinute * 60);
     }
 
     public string? ValidateToken(string token)

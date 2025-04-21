@@ -2,7 +2,7 @@
 
 namespace SurveyBasket.Api.Errors;
 
-public class UserErrors
+public record UserErrors
 {
     public static Error EmailNotComfirmed = new Error("User.EmailNotComfirmed", "email is not confirmed", StatusCodes.Status401Unauthorized);
     public static Error DisabledUser = new Error("User.DisabledUser", "this user is disapled", StatusCodes.Status401Unauthorized);

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SurveyBasket.Api.Abstractions.Consts;
 
 namespace SurveyBasket.Api.Contract.User;
 

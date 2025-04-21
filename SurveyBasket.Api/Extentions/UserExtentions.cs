@@ -6,6 +6,6 @@ public static class UserExtentions
 {
     public static int GetUserId(this ClaimsPrincipal user)
     {
-        return Convert.ToInt32( user.FindFirstValue(ClaimTypes.NameIdentifier));
+        return Convert.ToInt32(user.FindFirstValue(ClaimTypes.NameIdentifier));
     }
 }

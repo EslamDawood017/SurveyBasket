@@ -1,10 +1,8 @@
 ﻿using Mapster;
-using Microsoft.EntityFrameworkCore;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Contract.Question;
 using SurveyBasket.Api.Contract.Vote;
 using SurveyBasket.Api.Data;
-using SurveyBasket.Api.Entities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Interfaces;
 
@@ -29,7 +27,7 @@ public class VoteService(AppDbContext context) : IVoteService
             .Select(x => x.Id)
             .ToListAsync(cancellationToken);
 
-        if(!voteRequist.Answers.Select(a => a.QuestionId).SequenceEqual(availableQuestions))
+        if (!voteRequist.Answers.Select(a => a.QuestionId).SequenceEqual(availableQuestions))
             return Result.Failure<ICollection<QuestionResponse>>(VoteError.InvalidQuestions);
 
         var vote = new Vote
@@ -39,7 +37,7 @@ public class VoteService(AppDbContext context) : IVoteService
             VoteAnswers = voteRequist.Answers.Adapt<ICollection<VoteAnswer>>().ToList(),
         };
 
-        await _context.Votes.AddAsync(vote , cancellationToken);
+        await _context.Votes.AddAsync(vote, cancellationToken);
         await _context.SaveChangesAsync();
 
         return Result.Success();

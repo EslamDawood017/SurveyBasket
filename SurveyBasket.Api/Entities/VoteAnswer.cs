@@ -10,5 +10,5 @@ public class VoteAnswer
     public Vote Vote { get; set; } = default!;
     public Answer Answer { get; set; } = default!;
     public Question Question { get; set; } = default!;
-    
+
 }

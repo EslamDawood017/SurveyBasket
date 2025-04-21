@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Api.Contract.Registeration;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurveyBasket.Api.Contract.User;
 using SurveyBasket.Api.Extentions;
 using SurveyBasket.Api.Interfaces;
@@ -11,17 +8,15 @@ namespace SurveyBasket.Api.Controllers;
 [Route("me")]
 [ApiController]
 
-public class UsersController(IUserService userService ) : ControllerBase
+public class UsersController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;
 
-
-    [HttpGet("All")]
-    
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var users = await _userService.GetAllAsync(cancellationToken);
-         
+
         return Ok(users);
     }
     [HttpGet("{id}")]
@@ -29,7 +24,7 @@ public class UsersController(IUserService userService ) : ControllerBase
     {
         var result = await _userService.GetAsync(id);
 
-        return result.IsSuccess 
+        return result.IsSuccess
             ? Ok(result.Value)
             : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
 
@@ -46,11 +41,11 @@ public class UsersController(IUserService userService ) : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateUserInfo([FromBody] UpdateUserProfileRequist requist)
     {
-        await _userService.UpdateUserInfoAsync(User.GetUserId() , requist);
+        await _userService.UpdateUserInfoAsync(User.GetUserId(), requist);
 
         return NoContent();
     }
-    [HttpPut("Change-Password")]
+    [HttpPut("change-password")]
     [Authorize]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequist requist)
     {
@@ -58,16 +53,16 @@ public class UsersController(IUserService userService ) : ControllerBase
 
         return result.IsSuccess
             ? NoContent()
-            : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);    
+            : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
     }
     [HttpPost("")]
     [HasPermission(Permissions.AddUser)]
-    public async Task<IActionResult> Add([FromBody] CreateUserRequist requist , CancellationToken cancellationToken)
+    public async Task<IActionResult> Add([FromBody] CreateUserRequist requist, CancellationToken cancellationToken)
     {
-        var result = await _userService.AddAsync(requist , cancellationToken);
+        var result = await _userService.AddAsync(requist, cancellationToken);
 
-        return result.IsSuccess 
-            ? CreatedAtAction(nameof(Get) , new {result.Value.Id} , result.Value)
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(Get), new { result.Value.Id }, result.Value)
             : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
 
     }
@@ -78,15 +73,15 @@ public class UsersController(IUserService userService ) : ControllerBase
         var result = await _userService.UpdateAsync(requist, cancellationToken);
 
         return result.IsSuccess
-            ? NoContent ()
+            ? NoContent()
             : Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: StatusCodes.Status400BadRequest);
 
     }
     [HttpPut("toggle-user/{id}")]
     [HasPermission(Permissions.UpdateUser)]
-    public async Task<IActionResult> Update([FromRoute] int id , CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var result = await _userService.ToggleStatusAsync(id , cancellationToken);
+        var result = await _userService.ToggleStatusAsync(id, cancellationToken);
 
         return result.IsSuccess
             ? NoContent()

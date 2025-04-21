@@ -1,11 +1,4 @@
-﻿
-
-
-
-using Microsoft.AspNetCore.Identity;
-using SurveyBasket.Api.Consts;
-
-namespace SurveyBasket.Api.Data.EntitiesConfig;
+﻿namespace SurveyBasket.Api.Data.EntitiesConfig;
 
 public class UserConfig : IEntityTypeConfiguration<ApplicationUser>
 {
@@ -16,27 +9,28 @@ public class UserConfig : IEntityTypeConfiguration<ApplicationUser>
             .ToTable("RefreshTokens")
             .WithOwner()
             .HasForeignKey("UserId");
-       
-        builder.Property(x => x.FirstName).HasMaxLength(100);
-        builder.Property(x=>x.LastName).HasMaxLength(100);
 
-        var passwordHasher = new PasswordHasher<ApplicationUser>();
+        builder.Property(x => x.FirstName).HasMaxLength(100);
+        builder.Property(x => x.LastName).HasMaxLength(100);
+
+
 
         builder.HasData(new ApplicationUser
         {
             Id = DefaultUsers.AdminId,
             FirstName = "Survey Basket",
-            LastName = "Admin" ,
+            LastName = "Admin",
             UserName = DefaultUsers.AdminEmail,
             NormalizedUserName = DefaultUsers.AdminEmail.ToUpper(),
             Email = DefaultUsers.AdminEmail,
             NormalizedEmail = DefaultUsers.AdminEmail.ToUpper(),
             SecurityStamp = DefaultUsers.AdminConcurrencyStamp,
-            EmailConfirmed = true ,
-            PasswordHash = passwordHasher.HashPassword(null! , DefaultUsers.AdminPassword)
+            ConcurrencyStamp = DefaultUsers.AdminConcurrencyStamp,
+            EmailConfirmed = true,
+            PasswordHash = DefaultUsers.AdminPassword,
         });
 
     }
 
-    
+
 }

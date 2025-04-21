@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using SurveyBasket.Api.Data.EntitiesConfig;
 using System.Reflection;
 using System.Security.Claims;
 
 
 namespace SurveyBasket.Api.Data;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole , int>
+public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {
     private readonly IHttpContextAccessor httpContextAccessor;
 
@@ -18,7 +15,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
     public DbSet<Question> Questions { get; set; }
     public DbSet<Vote> Votes { get; set; }
     public DbSet<VoteAnswer> VoteAnswers { get; set; }
-    public AppDbContext(DbContextOptions<AppDbContext> options , IHttpContextAccessor httpContextAccessor) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
     {
         this.httpContextAccessor = httpContextAccessor;
     }
@@ -34,14 +31,14 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
         var CascadeFKs = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
-            .Where( fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
+            .Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
 
-        foreach(var fk in CascadeFKs)
+        foreach (var fk in CascadeFKs)
         {
             fk.DeleteBehavior = DeleteBehavior.Restrict;
-        }    
+        }
 
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -54,7 +51,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
 
         foreach (var entry in entries)
         {
-            if(entry.State == EntityState.Added)
+            if (entry.State == EntityState.Added)
             {
                 entry.Property(x => x.CreatedById).CurrentValue = NewUserID;
             }
@@ -62,7 +59,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser , ApplicationRole 
             {
                 entry.Property(x => x.UpdatedById).CurrentValue = NewUserID;
 
-                entry.Property(x => x.UpdatedOn).CurrentValue = DateTime.UtcNow; 
+                entry.Property(x => x.UpdatedOn).CurrentValue = DateTime.UtcNow;
             }
 
         }

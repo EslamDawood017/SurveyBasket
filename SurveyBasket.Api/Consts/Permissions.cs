@@ -25,7 +25,7 @@ public static class Permissions
 
     public static List<string?> GetAllPermissions()
     {
-        return  typeof(Permissions)
+        return typeof(Permissions)
             .GetFields()
             .Select(f => f.GetValue(f) as string)
             .ToList();

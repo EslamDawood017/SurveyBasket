@@ -15,7 +15,7 @@ public class MappingConfiguration : IRegister
 
 
         config.NewConfig<QuestionRequist, Question>()
-            .Map(dest => dest.Answers, src => src.Answers.Select( Answer =>  new Answer { Content = Answer}) );
+            .Map(dest => dest.Answers, src => src.Answers.Select(Answer => new Answer { Content = Answer }));
 
         config.NewConfig<UpdateUserRequist, ApplicationUser>()
             .Map(dest => dest.UserName, src => src.Email)

@@ -3,7 +3,7 @@
 [Owned]
 public class RefreshToken
 {
-    
+
     public string Token { get; set; } = string.Empty;
     public DateTime ExpiresOn { get; set; }
     public DateTime CreadtedOn { get; set; } = DateTime.UtcNow;
@@ -11,5 +11,5 @@ public class RefreshToken
 
     public bool IsExpired => DateTime.UtcNow >= ExpiresOn;
     public bool IsActive => RevokedOn is null && !IsExpired;
-    
+
 }

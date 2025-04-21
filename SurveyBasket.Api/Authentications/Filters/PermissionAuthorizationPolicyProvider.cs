@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Authentication.Filters;
 
-public class PermissionAuthorizationPolicyProvider(Microsoft.Extensions.Options.IOptions<AuthorizationOptions> options) 
+public class PermissionAuthorizationPolicyProvider(Microsoft.Extensions.Options.IOptions<AuthorizationOptions> options)
     : DefaultAuthorizationPolicyProvider(options)
 {
     private readonly AuthorizationOptions _authorizationOptions = options.Value;
@@ -9,7 +9,7 @@ public class PermissionAuthorizationPolicyProvider(Microsoft.Extensions.Options.
     {
         var policy = await base.GetPolicyAsync(policyName);
 
-        if(policy is not null)
+        if (policy is not null)
             return policy;
 
         var permissionPolicy = new AuthorizationPolicyBuilder()

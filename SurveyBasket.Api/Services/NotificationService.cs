@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using SurveyBasket.Api.Data;
 using SurveyBasket.Api.Helpers;
 using SurveyBasket.Api.Interfaces;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SurveyBasket.Api.Services;
 
 public class NotificationService(
-    AppDbContext context ,
+    AppDbContext context,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor , 
+    IHttpContextAccessor httpContextAccessor,
     IEmailSender emailSender) : INotificationService
 {
     private readonly AppDbContext _context = context;
@@ -22,11 +21,11 @@ public class NotificationService(
     {
         IEnumerable<Poll> polls = [];
 
-        if(pollId.HasValue)
+        if (pollId.HasValue)
         {
             var poll = await _context.Polls.SingleOrDefaultAsync(p => p.IsPublished && p.Id == pollId);
-        
-            polls = [poll!];  
+
+            polls = [poll!];
         }
         else
         {
@@ -37,12 +36,14 @@ public class NotificationService(
         }
 
         //TODO Select User only
-        var users =await _userManager.Users.ToListAsync();
+        var users = await _userManager.GetUsersInRoleAsync(DefaultRoles.Member.Name);
 
         var origin = _httpContextAccessor.HttpContext.Request.Headers.Origin;
 
-        foreach (var poll in polls) {
-            foreach (var user in users) {
+        foreach (var poll in polls)
+        {
+            foreach (var user in users)
+            {
                 var placeholders = new Dictionary<string, string>
                 {
                     {"{{name}}" , user.FirstName} ,
@@ -57,6 +58,6 @@ public class NotificationService(
             }
         }
 
-        
+
     }
 }

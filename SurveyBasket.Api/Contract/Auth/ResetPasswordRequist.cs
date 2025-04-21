@@ -2,6 +2,6 @@
 
 public record ResetPasswordRequist(
     string Email,
-    string Code , 
+    string Code,
     string NewPaswood
 );

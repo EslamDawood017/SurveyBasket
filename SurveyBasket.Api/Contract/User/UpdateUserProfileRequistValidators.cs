@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using SurveyBasket.Api.Abstractions.Consts;
 
 namespace SurveyBasket.Api.Contract.User;
 
 public class UpdateUserProfileRequistValidators : AbstractValidator<UpdateUserProfileRequist>
 {
-    public UpdateUserProfileRequistValidators() 
+    public UpdateUserProfileRequistValidators()
     {
         RuleFor(x => x.FirstName)
            .NotEmpty()

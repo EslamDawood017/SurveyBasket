@@ -1,7 +1,7 @@
 ﻿namespace SurveyBasket.Api.Contract.Roles;
 
 public record RoleRequist(
-    string Name , 
+    string Name,
     IEnumerable<string> Permission
 );
 

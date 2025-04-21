@@ -8,7 +8,7 @@ using SurveyBasket.Api.Interfaces;
 
 namespace SurveyBasket.Api.Services;
 
-public class RoleService(RoleManager<ApplicationRole> roleManager , AppDbContext context) : IRoleSerivce
+public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbContext context) : IRoleSerivce
 {
     private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
     private readonly AppDbContext _context = context;
@@ -72,7 +72,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , AppDbContext
 
         var allowedPermissions = Permissions.GetAllPermissions();
 
-        if(requist.Permission.Except(allowedPermissions).Any())
+        if (requist.Permission.Except(allowedPermissions).Any())
             return Result.Failure<RoleDetailResponse>(RoleErrors.InvalidPermission);
 
         var role = new ApplicationRole
@@ -83,17 +83,17 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , AppDbContext
             IsDefault = false,
             NormalizedName = requist.Name.ToUpper()
         };
-        
+
         var result = await _roleManager.CreateAsync(role);
 
-        if(result.Succeeded)
+        if (result.Succeeded)
         {
             var permission = requist.Permission
                 .Select(x => new IdentityRoleClaim<int>
                 {
                     ClaimType = Permissions.Type,
                     ClaimValue = x,
-                    RoleId = role.Id  
+                    RoleId = role.Id
                 });
 
             await _context.AddRangeAsync(permission);
@@ -112,7 +112,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , AppDbContext
     public async Task<IEnumerable<RoleResponse>> GetAllAsync(bool includeDeleted = false)
     {
         return await _roleManager.Roles
-                .Where(x => !x.IsDefault && (includeDeleted || !x.IsDeleted))
+                .Where(x => !x.IsDefault && includeDeleted)
                 .ProjectToType<RoleResponse>()
                 .ToListAsync();
 
@@ -126,7 +126,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , AppDbContext
 
         var permission = await _roleManager.GetClaimsAsync(role);
 
-        var response = new RoleDetailResponse(role.Id , role.Name , role.IsDeleted , permission.Select(x => x.Value));
+        var response = new RoleDetailResponse(role.Id, role.Name, role.IsDeleted, permission.Select(x => x.Value));
 
         return Result.Success(response);
     }

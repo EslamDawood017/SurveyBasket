@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Api.Consts;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurveyBasket.Api.Interfaces;
-using SurveyBasket.Api.Services;
 using SurveyBasket.Authentication.Filters;
 
 namespace SurveyBasket.Api.Controllers;
@@ -20,14 +17,14 @@ public class ResultController(IResultService resultService) : ControllerBase
 
         return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
     }
-    [HttpGet("votes-Per-Day")]
+    [HttpGet("votes-per-day")]
     public async Task<IActionResult> PollVotesPerDay([FromRoute] int pollId, CancellationToken cancellationToken)
     {
         var result = await _resultService.GetVotesCountPerDayAsync(pollId, cancellationToken);
 
         return result.IsSuccess ? Ok(result.Value) : Problem(statusCode: result.Error.statusCode, title: result.Error.Code, detail: result.Error.Description);
     }
-    [HttpGet("votes-Per-Question")]
+    [HttpGet("votes-per-question")]
     public async Task<IActionResult> PollVotesPerQuestion([FromRoute] int pollId, CancellationToken cancellationToken)
     {
         var result = await _resultService.GetVotesCountPerQuestionAsync(pollId, cancellationToken);

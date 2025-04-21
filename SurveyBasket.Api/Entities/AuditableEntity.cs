@@ -4,12 +4,12 @@ namespace SurveyBasket.Api.Entities;
 
 public class AuditableEntity
 {
-    [ForeignKey(nameof(CreatedBy))]  
+    [ForeignKey(nameof(CreatedBy))]
     public int CreatedById { get; set; }
 
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
-    [ForeignKey(nameof(UpdatedBy))] 
+    [ForeignKey(nameof(UpdatedBy))]
     public int? UpdatedById { get; set; }
 
     public DateTime? UpdatedOn { get; set; }

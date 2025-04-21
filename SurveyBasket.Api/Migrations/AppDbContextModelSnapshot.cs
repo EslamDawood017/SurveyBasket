@@ -17,7 +17,7 @@ namespace SurveyBasket.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -400,7 +400,7 @@ namespace SurveyBasket.Api.Migrations
                         {
                             Id = 100,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "84101219-602f-4dc0-b8ab-e19a1d75f1f6",
+                            ConcurrencyStamp = "2B31AE14-E8C2-42A5-BF1B-C4A1A6AEE7F7",
                             Email = "admin@survey-basket.com",
                             EmailConfirmed = true,
                             FirstName = "Survey Basket",
@@ -409,7 +409,7 @@ namespace SurveyBasket.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@SURVEY-BASKET.COM",
                             NormalizedUserName = "ADMIN@SURVEY-BASKET.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENm5c37e6xLhOoAtpMJYfEnOYDSMrRBPcr0VJ959T+pLvoFXoz+YlZWmQ9qP/6L/Dg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFvq3xmuVbLso6vFRyP1TXkY59HxfUqqxq9tapOOwdqHGvkR2SGhDCBzbgGlVCsGFQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "2B31AE14-E8C2-42A5-BF1B-C4A1A6AEE7F7",
                             TwoFactorEnabled = false,

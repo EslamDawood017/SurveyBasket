@@ -7,7 +7,7 @@ using SurveyBasket.Api.Settings;
 
 namespace SurveyBasket.Api.Services;
 
-public class MailService(IOptions<MailSettings> mailSetting ) : IEmailSender
+public class MailService(IOptions<MailSettings> mailSetting) : IEmailSender
 {
     private readonly MailSettings mailSetting = mailSetting.Value;
 
@@ -32,7 +32,7 @@ public class MailService(IOptions<MailSettings> mailSetting ) : IEmailSender
 
         smtp.Connect(mailSetting.Host, mailSetting.Port, SecureSocketOptions.StartTls);
 
-        smtp.Authenticate(mailSetting.Mail , mailSetting.Password);
+        smtp.Authenticate(mailSetting.Mail, mailSetting.Password);
         await smtp.SendAsync(message);
         smtp.Disconnect(true);
     }

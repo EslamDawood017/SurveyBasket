@@ -2,8 +2,8 @@
 
 public record RegisterationRequist(
     int Id,
-    string Email ,
-    string Password , 
-    string FirstName , 
+    string Email,
+    string Password,
+    string FirstName,
     string LastName);
 

@@ -14,7 +14,7 @@ public class DistributedCashService(IDistributedCache distributedCache) : IDistr
         var cashValue = await _distributedCache.GetStringAsync(key, cancellationToken);
 
         return string.IsNullOrEmpty(cashValue)
-            ? null 
+            ? null
             : JsonSerializer.Deserialize<T>(cashValue);
     }
     public async Task SetAsunc<T>(string key, T value, CancellationToken cancellationToken = default) where T : class
@@ -26,5 +26,5 @@ public class DistributedCashService(IDistributedCache distributedCache) : IDistr
         await _distributedCache.RemoveAsync(key, cancellationToken);
     }
 
-    
+
 }
